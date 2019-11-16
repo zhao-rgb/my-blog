@@ -232,6 +232,10 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-image: url("https://i0.hippopx.com/photos/179/171/625/sparkler-holding-hands-firework-preview.jpg");
+	/* 图片全屏 */
+	background-size: calc(100%);
+	
 }
 /* 第三方图标 */
 @font-face {

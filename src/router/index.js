@@ -18,49 +18,49 @@ Vue.use(VueRouter)
 const routes = [
 	{
 		path: '/',
-		component: Nav
-		// children: [{
-		// 		path: '/',
-		// 		redirect: '/index'
-		// 	},
-		// 	{
-		// 		path: 'index',
-		// 		component: Index
-		// 	},
-		// 	{
-		// 		path: 'collection',
-		// 		component: Collections,
-		// 		children: [{
-		// 			path: ':id',
-		// 			component: CollectionDetail
-		// 		}]
-		// 	},
-		// 	{
-		// 		path: 'article',
-		// 		component: Articles,
-		// 		children: [{
-		// 			path: ':id',
-		// 			component: ArticleDetail
-		// 		}]
-		// 	},
-		// 	{
-		// 		path: 'user',
-		// 		component: Users,
-		// 		children: [{
-		// 				path: 'follows',
-		// 				component: UserFollows
-		// 			},
-		// 			{
-		// 				path: 'fans',
-		// 				component: UserFans
-		// 			},
-		// 			{
-		// 				path: ':id',
-		// 				component: UserDetail
-		// 			}
-		// 		]
-		// 	}
-		// ]
+		component: Nav,
+		children: [{
+				path: '/',
+				redirect: '/index'
+			},
+			{
+				path: 'index',
+				component: Index
+			},
+			{
+				path: 'collection',
+				component: Collections,
+				children: [{
+					path: ':id',
+					component: CollectionDetail
+				}]
+			},
+			{
+				path: 'article',
+				component: Articles,
+				children: [{
+					path: ':id',
+					component: ArticleDetail
+				}]
+			},
+			{
+				path: 'user',
+				component: Users,
+				children: [{
+						path: 'follows',
+						component: UserFollows
+					},
+					{
+						path: 'fans',
+						component: UserFans
+					},
+					{
+						path: ':id',
+						component: UserDetail
+					}
+				]
+			}
+		]
 	},
 	{
 		path: '/sign',

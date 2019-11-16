@@ -5,16 +5,23 @@
 				<div class="media-left">
 					<img :src="article.avatar" class="bl-avatar-normal" />
 					<p class="sub-title">{{ article.nickname }}</p>
+					<p class="sub-title">{{ article.introduction }}</p>
 				</div>
 				<div class="media-middle">
-					<h6>{{ article.title }}</h6>
-					<p>{{ article.summary }}/p></p>
+					<h2>{{ article.title }}</h2>
+					<p>{{ article.summary }}</p>
 					<p>
-						<span>{{ article.likes }}喜欢</span>
-						<span>{{ article.comments }}评论</span>
+						<span>{{ article.content }}</span>
 					</p>
+					<p class="kk">
+						<i class="iconfont">&#xe666;</i>
+						<span class="jian">{{ article.likes }}</span>
+						<i class="iconfont">&#xe630;</i>
+						<span>{{ article.comments }}</span>
+					</p>	
+
 				</div>
-				<div class="media-right"><img :src="article.thumbnail" /></div>
+				<div class="media-right"><img :src="article.avatar" /></div>
 			</div>
 		</div>
 	</div>
@@ -47,9 +54,12 @@ export default {
 </script>
 
 <style scoped>
+	.container{
+		margin-top: 100px;
+	}
 	.media-wraaper {
 		width: 100%;
-		height: 180px;
+		height: 100px;
 		padding: 10px;
 	}
 	.media {
@@ -91,5 +101,31 @@ export default {
 		height: 100px;
 		border-radius: 10px;
 	}
+	
+	@font-face {
+	  font-family: 'iconfont';  /* project id 1434161 */
+	  src: url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.eot');
+	  src: url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.svg#iconfont') format('svg');
+	}
+	
+	.iconfont{
+	    font-family:"iconfont" !important;
+	    font-size:16px;font-style:normal;
+	    -webkit-font-smoothing: antialiased;
+	    -webkit-text-stroke-width: 0.2px;
+	    -moz-osx-font-smoothing: grayscale;
+		
+		}
+		.jian{
+			margin-right: 15px;
+			
+		}
+		.kk{
+			padding-top: 125px;
+		}
 	</style>
 </style>

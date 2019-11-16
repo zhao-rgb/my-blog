@@ -1,21 +1,29 @@
 <template>
-	<div>
-			<div class="bl-df-around">
-				<router-link to="/user/follows">我关注的</router-link>
-				<router-link to="/user/fans">我的粉丝</router-link>
+	<div class="container">
+		<div class="zh-col-4">
+			<div class="media" v-for="(user, index) in users" :key="index">
+				<div class="zh-avatar">
+					<img :src="user.avatar" />
+					<p class="sub-title">{{ user.nickname }}</p>
+				</div>
 			</div>
-			<router-view class="box"/>
+			
 		</div>
+	</div>
 </template>
 
 <script>
 	export default{
 		data(){
 			return{
-				
+				users :[]
 			}
 		},
 		created(){
+			this.axios.get('http://localhost:8080/api/users').then(res => {
+				console.log(res.data.data);
+				this.articles = res.data.data;
+			});
 			
 		},
 		methods:{
@@ -28,12 +36,8 @@
 </script>
 
 <style scoped>
-	.box {
-		background-color: lightblue;
-		min-width: 300px;
-		min-height: 400px;
+	.container{
+		margin-top: 100px;
 	}
-	a{
-		color: #aaa;
-	}
+	
 </style>

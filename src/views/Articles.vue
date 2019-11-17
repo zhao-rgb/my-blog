@@ -14,6 +14,8 @@
 						<span>{{ article.content }}</span>
 					</p>
 					<p class="kk">
+						<i class="iconfont" style="color: #e53935;">&#xe64a;</i>
+						<span class="di">{{ article.diamond }}</span>
 						<i class="iconfont">&#xe666;</i>
 						<span class="jian">{{ article.likes }}</span>
 						<i class="iconfont">&#xe630;</i>
@@ -104,12 +106,12 @@ export default {
 	
 	@font-face {
 	  font-family: 'iconfont';  /* project id 1434161 */
-	  src: url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.eot');
-	  src: url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.eot?#iefix') format('embedded-opentype'),
-	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.woff2') format('woff2'),
-	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.woff') format('woff'),
-	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.ttf') format('truetype'),
-	  url('//at.alicdn.com/t/font_1434161_6u700nmcd7j.svg#iconfont') format('svg');
+	  src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot');
+	  src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot?#iefix') format('embedded-opentype'),
+	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff2') format('woff2'),
+	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff') format('woff'),
+	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.ttf') format('truetype'),
+	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.svg#iconfont') format('svg');
 	}
 	
 	.iconfont{
@@ -118,14 +120,20 @@ export default {
 	    -webkit-font-smoothing: antialiased;
 	    -webkit-text-stroke-width: 0.2px;
 	    -moz-osx-font-smoothing: grayscale;
-		
 		}
+
+
+         .di{
+			 margin-right: 15px;
+		 }
+		 
 		.jian{
 			margin-right: 15px;
+			
 			
 		}
 		.kk{
 			padding-top: 125px;
 		}
-	</style>
+	
 </style>

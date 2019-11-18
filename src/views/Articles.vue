@@ -5,7 +5,6 @@
 				<div class="media-left">
 					<img :src="article.avatar" class="bl-avatar-normal" />
 					<p class="sub-title">{{ article.nickname }}</p>
-					<p class="sub-title">{{ article.introduction }}</p>
 				</div>
 				<div class="media-middle">
 					<h2>{{ article.title }}</h2>
@@ -73,6 +72,7 @@ export default {
 		background-color: #fff;
 		margin-bottom: 5px;
 		padding-top: 5px;
+		/* height: 250px; */
 	}
 	.media-left {
 		flex: 0 0 15%;
@@ -80,6 +80,10 @@ export default {
 		line-height: 50px;
 		border-right: 1px solid #eee;
 	}
+	.bl-avatar-normal{
+		height: 150px;
+	}
+		
 	.media-middle {
 		flex: 1 1 60%;
 		padding-left: 10px;

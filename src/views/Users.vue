@@ -1,10 +1,13 @@
 <template>
 	<div class="container">
-		<div class="zh-col-4">
+		<div class="media-wraaper">
 			<div class="media" v-for="(user, index) in users" :key="index">
-				<div class="zh-avatar">
+				<div class="media-left">
 					<img :src="user.avatar" />
 					<p class="sub-title">{{ user.nickname }}</p>
+					<button>关注</button>
+					<br>
+					<span>{{user.introduction}}</span>
 				</div>
 			</div>
 			
@@ -20,9 +23,9 @@
 			}
 		},
 		created(){
-			this.axios.get('http://localhost:8080/api/users').then(res => {
+			this.axios.get('http://localhost:8080/api/hot').then(res => {
 				console.log(res.data.data);
-				this.articles = res.data.data;
+				this.users = res.data.data;
 			});
 			
 		},
@@ -30,14 +33,29 @@
 			
 		},
 		computed:{
-			
+			// 解决403图片缓存问题
+			getImages(_url) {
+				if (_url) {
+					let _u = _url.substring(8);
+					return 'https://images.weserv.nl/?url=' + _u;
+				}
+			}
 		}
-	}
+	};
 </script>
 
 <style scoped>
-	.container{
-		margin-top: 100px;
+	.media{
+		width: 300px;
+		height: 250px;
 	}
 	
+	.media-wraaper{
+		display: flex;
+		flex-wrap: wrap;
+		flex: 1 1 33.3%;
+	}
+	.sub-title{
+		display: flex;
+	}
 </style>

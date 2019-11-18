@@ -1,48 +1,56 @@
 <template>
 	<div class="zh-row">
 		<div class="zh-col-8">
-			<div class="zh-row">
-				<div class="zh-col-12" v-for="(article,index) in articles" :key="index">
-				<div class="box xu-sub-title">
-										<p>{{ article.title }}</p>
-										<p>
-											<img :src="article.avatar" class="zh-avatar" />
-											<span class="zh-meta">{{ article.nickname }}</span>
-											<button class="zh-btn zh-warning-theme  zh-btn-circle zh-title zh-shadow">关注</button>
-										</p>
-									</div>
+			<div class="media" v-for="(article, index) in articles" :key="index">
+				<div class="media-left">
+					<p>{{ article.title }}</p>
+					<span class="zh-meta">{{ article.content }}</span>
+				</div>
+
+				<div class="media-right">
+					<img :src="article.avatar" class="sub-title" />
+				</div>
+			</div>
 		</div>
-		<div class="zh-col-4">
-			
-		</div>
+		<div class="zh-col-2"></div>
 	</div>
-	</div>
-	</div>
-	
 </template>
 
 <script>
-	export default{
-		data(){
-			return{
-				articles: []
-			}
-		},
-		created(){
-			this.axios.get('http://27z34d3886.wicp.vip:46912/api/articles/hot').then(res =>{
-				console.log(res.data.data)
-				this.articles = res.data.data
-			})
-		},
-		methods:{
-			
-		},
-		computed:{
-			
-		}
-	}
+export default {
+	data() {
+		return {
+			articles: []
+		};
+	},
+	created() {
+		this.axios.get('http://localhost:8080/api/articles/hot').then(res => {
+			console.log(res.data.data);
+			this.articles = res.data.data;
+		});
+	},
+	methods: {},
+	computed: {}
+};
 </script>
 
 <style scoped>
+.media {
+		display: flex;
+		align-items: stretch;
+		justify-content: flex-start;
+		border-bottom: 1px solid #ddd;
+		border-radius: 5px;
+		background-color: #fff;
+		margin-bottom: 5px;
+		padding-top: 5px;		
+	}
+.media-left{
+		flex: 1 1 60%;
+		
+}
+.media-right{
 	
+	flex: 1 1 30%;
+}
 </style>

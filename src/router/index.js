@@ -2,16 +2,20 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Nav from '@/views/Nav.vue'
 import Index from '@/views/Index.vue'
-import Collections from '@/views/Collections.vue'
-import CollectionDetail from '@/views/CollectionDetail.vue'
 import Articles from '@/views/Articles.vue'
 import ArticleDetail from '@/views/ArticleDetail.vue'
 import Users from '@/views/Users.vue'
 import UserDetail from '@/views/UserDetail.vue'
-import UserFans from '@/views/UserFans.vue'
-import UserFollows from '@/views/UserFollows.vue'
 import Sign from '@/views/Sign.vue'
-
+import Topics from '@/views/Topics.vue'
+import TopicDetail from '@/views/TopicDetail.vue'
+import Search from '@/views/Search.vue'
+import SearchUser from '@/views/SearchUser.vue'
+import SearchTopic from '@/views/SearchTopic.vue'
+import SearchArticle from '@/views/SearchArticle.vue'
+import Basic from '@/views/Basic.vue'
+import Setting from '@/views/Setting.vue'
+import Empty from '@/views/Empty.vue'
 
 Vue.use(VueRouter)
 
@@ -19,7 +23,8 @@ const routes = [
 	{
 		path: '/',
 		component: Nav,
-		children: [{
+		children: [
+			{
 				path: '/',
 				redirect: '/index'
 			},
@@ -28,44 +33,83 @@ const routes = [
 				component: Index
 			},
 			{
-				path: 'collection',
-				component: Collections,
+				path: 'topic',
+				component: Topics,
 				children: [{
 					path: ':id',
-					component: CollectionDetail
+					component: TopicDetail
 				}]
 			},
-			{
-				path: 'article',
-				component: Articles,
-				children: [{
-					path: ':id',
-					component: ArticleDetail
-				}]
-			},
+			// {
+			// 	path: 'article',
+			// 	component: Articles,
+			// 	children: [{
+			// 		path: ':id',
+			// 		component: ArticleDetail
+			// 	}]
+			// },
 			{
 				path: 'user',
 				component: Users,
+			},
+			{
+				path: 'user/:id',
+				component: UserDetail,
 				children: [{
-						path: 'follows',
-						component: UserFollows
+						path: '/',
+						redirect: 'user/:id'
 					},
 					{
-						path: 'fans',
-						component: UserFans
+						path: 'basic',
+						component: Basic
 					},
 					{
-						path: ':id',
-						component: UserDetail
+						path: 'setting',
+						component: Setting
 					}
 				]
+			},
+			{
+				path: 'search',
+				component: Search,
+				children: [{
+						path: '/',
+						redirect: 'article'
+					},
+					{
+						path: 'article',
+						component: SearchArticle
+					},
+					{
+						path: 'topic',
+						component: SearchTopic
+					},
+					{
+						path: 'user',
+						component: SearchUser
+					}
+				]
+			},
+			{
+				path: 'empty',
+				component: Empty
 			}
+			
 		]
 	},
 	{
 		path: '/sign',
 		component: Sign
+	},
+	{
+		path: '/user/detail/*',
+		component: UserDetail
+	},
+	{   
+		path: '/article/detail/*',
+	 	component: ArticleDetail,
 	}
+	
 ]
 
 const router = new VueRouter({

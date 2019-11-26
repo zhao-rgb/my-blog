@@ -1,4 +1,4 @@
- <template>
+<template>
 	<div class="full main-color">
 		<div class="login-box">
 			<div class="tab">
@@ -9,6 +9,10 @@
 			<div class="tab-box" v-if="show && selected === 0">
 				<input type="text" placeholder="请输入手机号/邮箱" v-model="userDto.mobile" />
 				<input type="password" placeholder="请输入6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
+				<div class="code-box">
+					<input type="text" placeholder="请输入验证码" v-model="userDto.code" />
+					<div class="img"><img ref="codeImg" @click="refresh()" style="cursor: pointer;" /></div>
+				</div>
 				<input type="submit" class="login-btn" value="登录" @click="signIn(userDto)" />
 				<span class="span-tab" @click="changeTab">没有账号，立即前往注册</span>
 			</div>
@@ -41,7 +45,6 @@
 				<span class="line"></span>
 				<span class="login-3rd">第三方登录</span>
 				<span class="line"></span>
-				
 			</div>
 
 			<div class="icon-box" v-if="show && selected === 0">
@@ -59,7 +62,7 @@
 				</div>
 			</div>
 		</div>
-		
+
 		<router-link to="/" class="back">返回</router-link>
 	</div>
 </template>
@@ -71,9 +74,10 @@ export default {
 			userDto: {
 				mobile: '',
 				password: '',
-				nickname: ''
+
+				code: ''
 			},
-			codeDisabled: true,
+			// codeDisabled: true,
 			msg: '获取验证码',
 			info: '',
 			isActive: true,
@@ -87,27 +91,72 @@ export default {
 			timer: null,
 			status: '',
 			yzmDisabled: false,
-			user: null
+			user: null,
+
+			// mob: '',
+			// password: '',
+			token: ''
 		};
 	},
 
+	created() {
+		this.axios.get(this.GLOBAL.baseUrl + '/code', { responseType: 'blob' }).then(res => {
+			var img = this.$refs.codeImg;
+			let url = window.URL.createObjectURL(res.data);
+			img.src = url;
+			console.log(res.headers);
+			// 取得后台通过响应头返回的sessionId的值
+			this.token = res.headers['access-token'];
+			console.log(this.token);
+		});
+	},
+
 	methods: {
+		// signIn(userDto) {
+		// 	this.axios.post('http://localhost:8080/api/sign-in', JSON.stringify(this.userDto)).then(response => {
+		// 		if (response.data.msg == '登录成功') {
+		// 			// 将后台的用户信息存入本地存储
+		// 			localStorage.user = JSON.stringify(response.data.data);
+		// 			// 路由跳转
+		// 			alert('登录成功');
+		// 			this.$router.push('/');
+		// 		} else {
+		// 			alert('密码错误');
+		// 		}
+		// 	});
+		// },
 
 		signIn(userDto) {
-			this.axios.post('http://localhost:8080/api/sign-in', JSON.stringify(this.userDto))
-			.then(response => {
-				if (response.data.msg == '登录成功') {
-					// 将后台的用户信息存入本地存储
-					localStorage.user = JSON.stringify(response.data.data);
-					// 路由跳转
+			// this.userDto.mobile = this.mob;
+			// this.userDto.password = this.password;
+			this.axios({
+				method: 'post',
+				url: this.GLOBAL.baseUrl + '/sign-in',
+				data: JSON.stringify(this.userDto),
+				headers: {
+					'Access-Token': this.token
+				}
+			}).then(res => {
+				if (res.data.msg === '登录成功') {
+					alert('登录成功');
+					localStorage.setItem('user', JSON.stringify(res.data.data));
+					// alert('登录成功');
 					this.$router.push('/');
 				} else {
-					alert("密码错误")
+					alert(res.data.msg);
+					this.userDto.code = '';
 				}
-				
 			});
 		},
 
+		refresh() {
+			this.axios.get(this.GLOBAL.baseUrl + '/code', { responseType: 'blob' }).then(res => {
+				console.log(res);
+				var img = this.$refs.codeImg;
+				let url = window.URL.createObjectURL(res.data);
+				img.src = url;
+			});
+		},
 		changeTab: function() {
 			this.isActive = !this.isActive;
 			this.selected = this.selected == 0 ? 1 : 0;
@@ -177,52 +226,49 @@ export default {
 		},
 
 		register(userDto) {
-			
 			if (this.userDto.nickname == '') {
-				this.info = '用户名不能为空'
-				this.showMsg()
-				return
+				this.info = '用户名不能为空';
+				this.showMsg();
+				return;
 			}
 			if (this.userDto.password == '' || this.pwd2 == '') {
-				this.info = '密码不能为空'
-				this.showMsg()
-				return
+				this.info = '密码不能为空';
+				this.showMsg();
+				return;
 			}
 			if (this.userDto.mobile == '') {
-				this.info = '手机号不能为空'
-				this.showMsg()
-				return
+				this.info = '手机号不能为空';
+				this.showMsg();
+				return;
 			}
 			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.info = '手机号码格式错误'
-				this.userDto.mobile = ''
-				return
+				this.info = '手机号码格式错误';
+				this.userDto.mobile = '';
+				return;
 			}
 			// 注册信息完全符合要求则进行下面注册操作
-			this.axios.post('http://localhost:8080/api/register', JSON.stringify(this.userDto))
-			.then(response => {
+			this.axios.post('http://localhost:8080/api/register', JSON.stringify(this.userDto)).then(response => {
 				if (response.data.msg == '注册成功') {
-					alert("注册成功")
+					alert('注册成功');
 					// 将后台的用户信息存入本地存储
 					localStorage.user = JSON.stringify(response.data.data);
 					// 路由跳转
 					this.$router.push('/');
 				}
-			})
+			});
 		}
 	}
-}
+};
 </script>
 
 <style scoped>
-	
 .back {
-		position: absolute;
-		top: 1%;
-		right: 1%;
-		background-color: #008000
-	}
-	
+	position: absolute;
+	top: 1%;
+	right: 1%;
+	background-color: #008000;
+}
+
 .full {
 	position: absolute;
 	top: 0;
@@ -232,10 +278,9 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-image: url("https://i0.hippopx.com/photos/179/171/625/sparkler-holding-hands-firework-preview.jpg");
+	background-image: url('https://i0.hippopx.com/photos/179/171/625/sparkler-holding-hands-firework-preview.jpg');
 	/* 图片全屏 */
 	background-size: calc(100%);
-	
 }
 /* 第三方图标 */
 @font-face {
@@ -422,5 +467,15 @@ p {
 	font-family: '楷体';
 	font-size: 30px;
 	font-weight: 300;
+}
+.code-box {
+	display: flex;
+	align-items: center;
+	padding-right: 23px;
+	padding-left: 8px;
+}
+.img {
+	height: 40px;
+	width: 200px;
 }
 </style>

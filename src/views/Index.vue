@@ -3,7 +3,7 @@
 		<div class="zh-col-8">
 			<div class="media" v-for="(article, index) in articles" :key="index">
 				<div class="media-left">
-					<p>{{ article.title }}</p>
+					<p @click="toDetail(article.id)" class="gg">{{ article.title }}</p>
 					<span class="zh-meta">{{ article.content }}</span>
 				</div>
 
@@ -29,8 +29,17 @@ export default {
 			this.articles = res.data.data;
 		});
 	},
-	methods: {},
-	computed: {}
+	methods: {
+		toDetail(id) {
+				this.$router.push('/article/detail/' + id)
+			}
+	},
+	computed: {
+		// 解决403图片缓存问题
+				getImages(_url) {
+					return 'https://images.weserv.nl/?url=' + _url;
+				}
+	}
 };
 </script>
 
@@ -52,5 +61,8 @@ export default {
 .media-right{
 	
 	flex: 1 1 30%;
+}
+.gg{
+	cursor: pointer;
 }
 </style>

@@ -4,13 +4,15 @@
 			<div class="zh-nav-bar zh-fx-between">
 				<ul class="zh-list">
 					<li><router-link to="/index">主页</router-link></li>
-					<li><router-link to="/collection">专题</router-link></li>
+					<li><router-link to="/topic">专题</router-link></li>
 					<li><router-link to="/article">文章</router-link></li>
 					<li><router-link to="/user">作者</router-link></li>
+					<li class="nav-item"><input type="text" class="input-box" placeholder="搜索" v-model="keywords" /></li>
+					<li class="nav-item"><button class="btn btn-lg btn-rd dark-border" @click="search">搜索</button></li>
 				</ul>
 				<div class="changeBox">
 					<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
-					<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" />
+					<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
 					<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 				</div>
 			</div>
@@ -34,22 +36,23 @@ export default {
 	data() {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
+			keywords: '',
 
 			slideList: [
 				{
-					"url": "#",
-					"description": "one",
-					"image": "https://cdn.dribbble.com/users/329207/screenshots/7824170/media/cc77353e67ca46a4da78553330209a72.jpg"
+					url: '#',
+					description: 'one',
+					image: 'https://cdn.dribbble.com/users/329207/screenshots/7824170/media/cc77353e67ca46a4da78553330209a72.jpg'
 				},
 				{
-					"url": "#",
-					"description": "two",
-					"image": "https://cdn.dribbble.com/users/63407/screenshots/7825858/media/547d13eb0522eabcbbaa6683c82bfe40.png"
+					url: '#',
+					description: 'two',
+					image: 'https://cdn.dribbble.com/users/63407/screenshots/7825858/media/547d13eb0522eabcbbaa6683c82bfe40.png'
 				},
 				{
-					"url": "#",
-					"description": "three",
-					"image": "https://cdn.dribbble.com/users/1018201/screenshots/7816965/media/2ed92a6a7ee0017e28f3bbcaf88b8138.png"
+					url: '#',
+					description: 'three',
+					image: 'https://cdn.dribbble.com/users/1018201/screenshots/7816965/media/2ed92a6a7ee0017e28f3bbcaf88b8138.png'
 				}
 			],
 			currentIndex: 0,
@@ -62,6 +65,7 @@ export default {
 			this.user = null;
 			this.$router.push('/');
 			alert('退出');
+			localStorage.clear();
 		},
 
 		go() {
@@ -81,6 +85,18 @@ export default {
 			if (this.currentIndex > this.slideList.length - 1) {
 				this.currentIndex = 0;
 			}
+		},
+		search() {
+			let currentPath = this.$route.path;
+			alert(currentPath);
+			if (currentPath != '/search' || currentPath != '/search/article' || currentPath != '/search/topic' || currentPath != '/search/usere') {
+				this.$router.push({ path: '/search', query: { keywords: this.keywords } });
+			} else {
+				this.$router.push({ path: '/empty', query: { keywords: this.keywords } });
+			}
+		},
+		toUserDetail(id) {
+			this.$router.push('/user/detail/' + id)
 		}
 	}
 };
@@ -108,7 +124,6 @@ li {
 	top: 0;
 	z-index: 50;
 }
-
 
 .carousel-wrap {
 	position: relative;

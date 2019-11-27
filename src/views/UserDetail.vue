@@ -46,7 +46,14 @@ export default {
 		};
 	},
 	created() {},
-	methods: {},
+	methods: {
+		logout() {
+			this.user = null;
+			this.$router.push('/');
+			alert('退出');
+			localStorage.clear();
+		}
+	},
 	computed: {}
 };
 </script>

@@ -36,7 +36,7 @@ export default {
 		};
 	},
 	created() {
-		this.axios.get('http://localhost:8080/api/articles/hot').then(res => {
+		this.axios.get('http://localhost:8080/api/article/hot').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
 		});

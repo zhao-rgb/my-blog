@@ -74,10 +74,9 @@ export default {
 			userDto: {
 				mobile: '',
 				password: '',
-
 				code: ''
 			},
-			// codeDisabled: true,
+			codeDisabled: true,
 			msg: '获取验证码',
 			info: '',
 			isActive: true,
@@ -140,11 +139,11 @@ export default {
 				if (res.data.msg === '登录成功') {
 					alert('登录成功');
 					localStorage.setItem('user', JSON.stringify(res.data.data));
-					// alert('登录成功');
 					this.$router.push('/');
 				} else {
 					alert(res.data.msg);
 					this.userDto.code = '';
+					alert('密码错误');
 				}
 			});
 		},

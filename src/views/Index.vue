@@ -18,7 +18,22 @@
 				<div class="media-right"><img :src="article.avatar" class="sub-title" /></div>
 			</div>
 		</div>
-		<div class="zh-col-2"></div>
+		<div class="zh-col-4">
+			<h3>热门作者</h3>
+			<div v-for="(user, index) in users" :key="index" class="row">
+				<div class="zh-col-12 border box">
+					<div class="flex-center-y">
+						<router-link :to="{ path: '/user' + user.id }"><img :src="user.avatar" class="avatar-xs link" /></router-link>
+						<p class="sub-title">{{ user.nickname }}</p>
+					</div>
+					<div class="flex-center-y">
+						<p class="meta">{{ user.fans }}个粉丝</p>
+						<p class="meta">写了{{ user.articles }}篇文章</p>
+					</div>
+					<div class="flex-center-y"><button class="zh-btn btn-follow">关注</button></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -26,13 +41,18 @@
 export default {
 	data() {
 		return {
-			articles: []
+			articles: [],
+			users: []
 		};
 	},
 	created() {
 		this.axios.get('http://localhost:8080/api/article/hot').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
+		});
+		this.axios.get(this.GLOBAL.baseUrl + '/user/hot').then(res => {
+			// console.log(res.data.data);
+			this.users = res.data.data;
 		});
 	},
 	methods: {
@@ -95,5 +115,23 @@ export default {
 	-webkit-font-smoothing: antialiased;
 	-webkit-text-stroke-width: 0.2px;
 	-moz-osx-font-smoothing: grayscale;
+}
+.box {
+	display: flex;
+	justify-content: space-around;
+	height: 70px;
+	padding: 10px;
+}
+.btn-follow {
+	background-color: #42c02e;
+	font-weight: 400;
+	font-size: 15px;
+	color: #fff;
+	padding: 5px 0;
+	width: 80px;
+	height: 30px;
+	border-radius: 40px;
+	display: inline-block;
+	text-align: center;
 }
 </style>

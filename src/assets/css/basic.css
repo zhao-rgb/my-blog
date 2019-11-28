@@ -26,7 +26,13 @@ u{
 	display: flex;
 	flex-wrap: wrap;
 }
-
+/* 栅格 */
+.row {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
+	padding: 10px;
+}
 .zh-col-12{
 	flex: 1 1 100%;
 }
@@ -43,7 +49,6 @@ u{
 
 .zh-col-4{	
 	flex: 1 1 33.3%;
-	background-color: green;
 }
 
 .zh-col-3{
@@ -53,7 +58,6 @@ u{
 
 .zh-col-2{
 	flex: 1 1 16.6%;
-	background-color: green;
 }
 
 .zh-col-1{
@@ -82,6 +86,20 @@ u{
 	justify-content: space-around;
 }
 
+.flex-center-y {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.flex-top-y {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	align-content: space-between;
+}
+
 .zh-center{
 	text-align: center;
 }
@@ -98,6 +116,10 @@ u{
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: center;
+}
+/* 间距 */
+.gutter {
+	margin-right: 10px;
 }
 
 

@@ -40,14 +40,14 @@ const routes = [
 					component: TopicDetail
 				}]
 			},
-			// {
-			// 	path: 'article',
-			// 	component: Articles,
-			// 	children: [{
-			// 		path: ':id',
-			// 		component: ArticleDetail
-			// 	}]
-			// },
+			{
+				path: 'article',
+				component: Articles,
+				children: [{
+					path: ':id',
+					component: ArticleDetail
+				}]
+			},
 			{
 				path: 'user',
 				component: Users,
@@ -72,7 +72,8 @@ const routes = [
 			{
 				path: 'search',
 				component: Search,
-				children: [{
+				children: [
+					{
 						path: '/',
 						redirect: 'article'
 					},

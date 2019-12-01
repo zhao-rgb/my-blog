@@ -1,13 +1,13 @@
 <template>
-	div class="row">
-			<div class="col-4">
+	<div class="row">
+			<div class="zh-col-4">
 				<ul>
-					<!-- <li><router-link :to="{ path: '/search/article', query: { keywords: this.keywords } }">文章</router-link></li>
+					<li><router-link :to="{ path: '/search/article', query: { keywords: this.keywords } }">文章</router-link></li>
 					<li><router-link :to="{ path: '/search/topic', query: { keywords: this.keywords } }">专题</router-link></li>
-					<li><router-link :to="{ path: '/search/user', query: { keywords: this.keywords } }">用户</router-link></li> -->
+					<li><router-link :to="{ path: '/search/user', query: { keywords: this.keywords } }">用户</router-link></li>
 				</ul>
 			</div>
-			<div class="col-8"><router-view /></div>
+			<div class="zh-col-8"><router-view /></div>
 		</div>
 </template>
 

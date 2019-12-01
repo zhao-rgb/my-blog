@@ -88,7 +88,6 @@ export default {
 		},
 		search() {
 			let currentPath = this.$route.path;
-			alert(currentPath);
 			if (currentPath != '/search' || currentPath != '/search/article' || currentPath != '/search/topic' || currentPath != '/search/usere') {
 				this.$router.push({ path: '/search', query: { keywords: this.keywords } });
 			} else {

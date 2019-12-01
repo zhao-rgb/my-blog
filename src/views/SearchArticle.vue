@@ -1,6 +1,6 @@
 <template>
 	<div class="row">
-		<div v-for="(item, index) in articles" :key="index" class="col-12">
+		<div v-for="(item, index) in articles" :key="index" class="zh-col-12">
 			<div class="media-wraaper shadow">
 				<div class="media-left">
 					<img :src="item.avatar" class="avatar-lg link" />
@@ -39,7 +39,7 @@ export default {
 		this.keywords = this.$route.query.keywords;
 		console.log(this.keywords);
 		this.axios
-			.get(this.GLOBAL.baseUrl + '/article', {
+			.get(this.GLOBAL.baseUrl + '/article/', {
 				params: {
 					keywords: this.keywords
 				}

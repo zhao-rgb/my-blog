@@ -1,17 +1,17 @@
 <template>
 	<div class="row">
-		<div v-for="(item, index) in users" :key="index" class="zh-col-12">
+		<div v-for="(user, index) in users" :key="index" class="zh-col-12">
 			<div class="media-wraaper shadow">
 				<div class="media-left">
-					<img :src="item.avatar" class="avatar-lg link" />
-					<p>{{ item.nickname }}</p>
+					<img :src="user.avatar" class="avatar-lg link" @click="toDetail(user.id)" />
+					<p>{{ user.nickname }}</p>
 				</div>
 				<div class="media-middle">
-					<p>{{ item.introduction }}</p>
+					<p>{{ user.introduction }}</p>
 					<p>
-						<span class="meta gutter">写了{{ item.articles }}篇文章</span>
-						<span class="meta gutter">{{ item.fans }}个粉丝</span>
-						<span class="meta gutter">关注了{{ item.follows }}人</span>
+						<span class="meta gutter">写了{{ user.articles }}篇文章</span>
+						<span class="meta gutter">{{ user.fans }}个粉丝</span>
+						<span class="meta gutter">关注了{{ user.follows }}人</span>
 					</p>
 				</div>
 				<div class="media-right"><button class="btn btn-lg btn-rd warning-fill">关注</button></div>
@@ -42,7 +42,11 @@ export default {
 				this.users = res.data.data;
 			});
 	},
-	methods: {}
+	methods: {
+		toDetail(id) {
+			this.$router.push('/user/detail/' + id);
+		}
+	}
 };
 </script>
 

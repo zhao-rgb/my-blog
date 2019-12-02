@@ -9,12 +9,10 @@
 					<p>{{ item.topicName }}</p>
 				</div>
 				<div class="media-middle">
-					<router-link :to="{ path: '/article/' + item.id }">
-						<p>
-							<span>{{ item.id }}</span>
-							{{ item.title }}
-						</p>
-					</router-link>
+					<p @click="toDetail(item.id)" class="pointer">
+						<!-- <span>{{ item.id }}</span> -->
+						{{ item.title }}
+					</p>
 					<p class="sub-title link">{{ item.summary }}</p>
 					<p>
 						<span class="meta">{{ item.comments }}评论</span>
@@ -49,7 +47,11 @@ export default {
 				this.articles = res.data.data;
 			});
 	},
-	methods: {}
+	methods: {
+		toDetail(id) {
+			this.$router.push('/article/detail/' + id);
+		}
+	}
 };
 </script>
 

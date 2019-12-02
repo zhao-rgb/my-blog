@@ -145,6 +145,10 @@
 	border: 1px solid #ddd;
 	border-radius: 5px;
 }
+
+.pointer{
+	cursor: pointer;
+}
 /* .media-left {
 	flex: 1 1 18%;
 	text-align: center;

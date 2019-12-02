@@ -7,7 +7,7 @@
 					<p class="sub-title">{{ article.nickname }}</p>
 				</div>
 				<div class="media-middle">
-					<h2>{{ article.title }}</h2>
+					<h2 class="pointer" @click="toDetail(article.id)">{{ article.title }}</h2>
 					<p>{{ article.summary }}</p>
 					<p>
 						<span>{{ article.content }}</span>
@@ -35,11 +35,18 @@ export default {
 			articles: []
 		};
 	},
+	
 	created() {
 		this.axios.get('http://localhost:8080/api/article/hot').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
 		});
+	},
+	
+	methods: {
+		toDetail(id) {
+			this.$router.push('/article/detail/' + id);
+		}
 	},
 
 	computed: {

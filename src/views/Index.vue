@@ -23,7 +23,7 @@
 			<div v-for="(user, index) in users" :key="index" class="row">
 				<div class="zh-col-12 border box">
 					<div class="flex-center-y">
-						<router-link :to="{ path: '/user' + user.id }"><img :src="user.avatar" class="avatar-xs link" /></router-link>
+						<img :src="user.avatar" class="avatar-xs link"  @click="toDetailuser(user.id)"/>
 						<p class="sub-title">{{ user.nickname }}</p>
 					</div>
 					<div class="flex-center-y">
@@ -58,6 +58,9 @@ export default {
 	methods: {
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
+		},
+		toDetailuser(id){
+			this.$router.push('/user/detail/' +id);
 		}
 	},
 	computed: {

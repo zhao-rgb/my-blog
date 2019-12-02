@@ -3,8 +3,8 @@
 		<div class="media-wraaper ">
 			<div class="zh-col-4" v-for="(topic, index) in topics" :key="index">
 				<div class="media-left">
-					<img :src="topic.logo" class="bl-avatar-normal" />
-					<h2>{{ topic.name }}</h2>
+					<img :src="topic.logo" class="bl-avatar-normal" @click="toDetail(topic.id)" />
+					<h2 class="pointer">{{ topic.name }}</h2>
 				</div>
 				<div class="media-middle">
 					<p>{{ topic.description }}</p>
@@ -65,7 +65,11 @@ export default {
 		},
 		go(page){
 			window.location.href = page;
+		},
+		toDetail(id) {
+			this.$router.push('/topic/detail/' + id);
 		}
+		
 	},
 	computed: {
 		// 解决403图片缓存问题

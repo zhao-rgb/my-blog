@@ -51,24 +51,32 @@ const routes = [
 			{
 				path: 'user',
 				component: Users,
+				children: [{
+						path: ':id',
+						component: UserDetail
+					}],
 			},
 			{
 				path: 'user/:id',
-				component: UserDetail,
-				children: [{
-						path: '/',
-						redirect: 'user/:id'
-					},
-					{
-						path: 'basic',
-						component: Basic
-					},
-					{
-						path: 'setting',
-						component: Setting
-					}
-				]
+				component: UserDetail
 			},
+			// {
+			// 	path: 'user/:id',
+			// 	component: UserDetail,
+			// 	children: [{
+			// 			path: '/',
+			// 			redirect: 'user/:id'
+			// 		},
+			// 		{
+			// 			path: 'basic',
+			// 			component: Basic
+			// 		},
+			// 		{
+			// 			path: 'setting',
+			// 			component: Setting
+			// 		}
+			// 	]
+			// },
 			{
 				path: 'search',
 				component: Search,
@@ -108,7 +116,11 @@ const routes = [
 	},
 	{   
 		path: '/article/detail/*',
-	 	component: ArticleDetail,
+	 	component: ArticleDetail
+	},
+	{
+		path: '/topic/detail/*',
+		component: TopicDetail
 	}
 	
 ]

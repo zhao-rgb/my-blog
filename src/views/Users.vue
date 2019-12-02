@@ -3,7 +3,8 @@
 		<div class="media-wraaper">
 			<div class="zh-col-4" v-for="(user, index) in users" :key="index">
 				<div class="media-left">
-					<img :src="user.avatar" />
+					<!-- <img :src="user.avatar" /> -->
+					<router-link :to="{ path: '/user/detail/' + user.id }"><img :src="user.avatar" /></router-link>
 					<p class="sub-title">{{ user.nickname }}</p>
 					<button>关注</button>
 					<br />

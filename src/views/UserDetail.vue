@@ -10,7 +10,7 @@
 				<li class="nav-item"><button class="btn btn-lg btn-rd dark-border" @click="search">搜索</button></li>
 			</ul>
 			<div class="changeBox">
-				<img :src="this.user.avatar" class="zh-avatar"  @click="toUserDetail(user.id)" />
+				<img :src="user.avatar" class="zh-avatar"  @click="toUserDetail(user.id)" />
 				<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 			</div>
 		</div>
@@ -41,18 +41,33 @@
 <script>
 export default {
 	data() {
+		// return {
+		// 	user: JSON.parse(localStorage.getItem('user'))
+		// };
 		return {
-			user: JSON.parse(localStorage.getItem('user'))
-		};
+					userDetail: null,
+					user: null
+				};
 	},
-	created() {},
+	created() {
+		var query = window.location.href;
+		//锁定到最后一个"/"的位置
+		var begin = query.lastIndexOf('/') + 1;
+		//取出地址中最后的id值
+		var usersId = query.substring(begin);
+				this.axios.get(this.GLOBAL.baseUrl + '/detail/' + usersId).then(res => {
+					console.log(res.data.data);
+					this.userDetail = res.data.data;
+					this.user = this.userDetail[0];
+				});
+	},
 	methods: {
-		logout() {
-			this.user = null;
-			this.$router.push('/');
-			alert('退出');
-			localStorage.clear();
-		}
+		// logout() {
+		// 	this.user = null;
+		// 	this.$router.push('/');
+		// 	alert('退出');
+		// 	localStorage.clear();
+		// }
 	},
 	computed: {}
 };

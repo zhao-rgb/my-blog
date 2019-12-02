@@ -21,9 +21,8 @@
 				<input type="text" placeholder="请设置用户名" v-model="userDto.nickname" />
 				<input type="password" placeholder="请设置6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
 				<input type="password" placeholder="请确认密码" minlength="6" maxlength="16" v-model="pwd2" />
-				<div class="tel-box">
+				<!-- <div class="tel-box">
 					<div class="tel-code-box">
-						<!-- 失去焦点时的方法 -->
 						<input
 							class="input-tel"
 							type="tel"
@@ -37,6 +36,21 @@
 						<input type="text" class="input-tel" placeholder="请输入验证码" />
 					</div>
 					<input class="input-tel-btn" :class="{ regist: hover }" type="submit" :value="msg" :disabled="codeDisabled" @click="getCode" />
+				</div> -->
+				
+				<input
+					class="input-tel"
+					type="tel"
+					placeholder="请绑定手机号"
+					minlength="11"
+					maxlength="11"
+					v-model="userDto.mobile"
+					:disabled="yzmDisabled"
+					@input.prevent="checkLength"
+				/>
+				<div class="code-box">
+					<input type="text" placeholder="请输入验证码" v-model="userDto.code" />
+					<div class="img"><img ref="codeImg" @click="refresh()" style="cursor: pointer;" /></div>
 				</div>
 				<input type="submit" class="regist-btn" value="注册" @click="register(userDto)" />
 			</div>
@@ -76,24 +90,14 @@ export default {
 				password: '',
 				code: ''
 			},
-			codeDisabled: true,
-			msg: '获取验证码',
+			codeDisabled: true,		
 			info: '',
 			isActive: true,
-			countdown: 10,
 			show: true,
-			selected: 0,
-			hover: true,
-			pop: false,
-			popPlus: false,
-			countMsg: 2,
-			timer: null,
+			selected: 0,			
 			status: '',
 			yzmDisabled: false,
-			user: null,
-
-			// mob: '',
-			// password: '',
+			user: null,		
 			token: ''
 		};
 	},
@@ -126,8 +130,6 @@ export default {
 		// },
 
 		signIn(userDto) {
-			// this.userDto.mobile = this.mob;
-			// this.userDto.password = this.password;
 			this.axios({
 				method: 'post',
 				url: this.GLOBAL.baseUrl + '/sign-in',
@@ -170,31 +172,6 @@ export default {
 			}
 		},
 
-		getCode() {
-			if (!this.timer) {
-				this.timer = setInterval(() => {
-					if (this.countdown > 0 && this.countdown <= 10) {
-						this.countdown--;
-						if (this.countdown != 0) {
-							this.hover = false;
-							this.codeDisabled = true;
-							this.msg = '重新发送(' + this.countdown + ')';
-							this.yzmDisabled = true;
-						} else {
-							clearInterval(this.timer);
-							this.status = 'success';
-							this.msg = '获取验证码';
-							this.countdown = 10;
-							this.timer = null;
-							this.hover = true;
-							this.codeDisabled = true;
-							this.yzmDisabled = false;
-						}
-					}
-				}, 10);
-			}
-		},
-
 		clear() {
 			// alert("我进入到了clear()方法中");
 			this.userDto.nickname = '';
@@ -203,25 +180,6 @@ export default {
 			this.pwd2 = '';
 			this.status = '';
 			this.codeDisabled = true;
-		},
-
-		// 提示信息的方法,都存在两秒钟
-		showMsg() {
-			if (!this.timer) {
-				this.timer = setInterval(() => {
-					if (this.countMsg > 0 && this.countMsg <= 2) {
-						this.countMsg--;
-						if (this.countMsg != 0) {
-							this.pop = true;
-						} else {
-							clearInterval(this.timer);
-							this.countMsg = 2;
-							this.timer = null;
-							this.pop = false;
-						}
-					}
-				}, 1000);
-			}
 		},
 
 		register(userDto) {
@@ -254,6 +212,20 @@ export default {
 					// 路由跳转
 					this.$router.push('/');
 				}
+			});
+			this.axios({
+				method: 'post',
+				url: this.GLOBAL.baseUrl + '/register',
+				data: JSON.stringify(this.userDto),
+				headers: {
+					'Access-Token': this.token
+				}
+			}).then(res => {
+				if (res.data.msg === '注册成功') {
+					alert('注册成功');
+					localStorage.setItem('user', JSON.stringify(res.data.data));
+					this.$router.push('/');
+				} 
 			});
 		}
 	}

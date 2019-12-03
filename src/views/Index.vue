@@ -1,6 +1,7 @@
 <template>
 	<div class="zh-row">
 		<div class="zh-col-8">
+			<h3 class="border-bottom">热门文章</h3>
 			<div class="media" v-for="(article, index) in articles" :key="index">
 				<div class="media-left">
 					<p @click="toDetail(article.id)" class="gg">{{ article.title }}</p>
@@ -18,12 +19,12 @@
 				<div class="media-right"><img :src="article.avatar" class="sub-title" /></div>
 			</div>
 		</div>
-		<div class="zh-col-4">
-			<h3>热门作者</h3>
+		<div class="zh-col-4 ">
+			<h3 class="border-bottom">热门作者</h3>
 			<div v-for="(user, index) in users" :key="index" class="row">
 				<div class="zh-col-12 border box">
 					<div class="flex-center-y">
-						<img :src="user.avatar" class="avatar-xs link"  @click="toDetailuser(user.id)"/>
+						<img :src="user.avatar" class="avatar-xs pointer"  @click="toDetailuser(user.id)"/>
 						<p class="sub-title">{{ user.nickname }}</p>
 					</div>
 					<div class="flex-center-y">
@@ -42,7 +43,8 @@ export default {
 	data() {
 		return {
 			articles: [],
-			users: []
+			users: [],
+			topic: []
 		};
 	},
 	created() {
@@ -53,6 +55,10 @@ export default {
 		this.axios.get(this.GLOBAL.baseUrl + '/user/hot').then(res => {
 			// console.log(res.data.data);
 			this.users = res.data.data;
+		});
+		this.axios.get(this.GLOBAL.baseUrl + '/topic/hot').then(res => {
+			// console.log(res.data.data);
+			this.topic = res.data.data;
 		});
 	},
 	methods: {

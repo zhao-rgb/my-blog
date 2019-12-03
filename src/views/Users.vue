@@ -1,14 +1,17 @@
 <template>
-	<div class="container">
-		<div class="media-wraaper">
+	<div>
+		<div class="row">
 			<div class="zh-col-4" v-for="(user, index) in users" :key="index">
-				<div class="media-left">
-					<!-- <img :src="user.avatar" /> -->
-					<router-link :to="{ path: '/user/detail/' + user.id }"><img :src="user.avatar" /></router-link>
-					<p class="sub-title">{{ user.nickname }}</p>
-					<button>关注</button>
-					<br />
-					<span>{{ user.introduction }}</span>
+				<div class="card zh-shadow flex flex-top-y">
+					<div class="card-head flex zh-flex-center">
+						<p class="zh-title">{{ user.nickname }}</p>
+						<router-link :to="{ path: '/user/detail/' + user.id }"><img :src="user.avatar" /></router-link>
+					</div>
+					<div class="card-body flex zh-flex-left">
+						<p class="zh-sub-title">{{user.introduction}}</p>
+						<p class="meta"><strong>来自：{{user.address}}</strong></p>
+						<p class="meta">{{user.articles}}篇文章，{{user.fans}}个粉丝</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -75,17 +78,36 @@ export default {
 </script>
 
 <style scoped>
-/* .media {
-	width: 300px;
-	height: 250px;
-} */
-
-.media-wraaper {
-	display: flex;
-	flex-wrap: wrap;
-	flex: 1 1 33.3%;
+.card {
+	width: 90%;
+	height: 300px;
+	/* background-image: url(../assets/img/user.png); */
+	background-size: 100%, 100%;
+	margin-bottom: 50px;
+	padding: 20px;
 }
-.sub-title {
+.card-head {
+	height: 30%;
+	padding: 10px;
 	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.card-head img {
+	width: 80px;
+	height: 80px;
+	border-radius: 50%;
+	margin-left: 20px;
+}
+.card-body {
+	width: 80%;
+	margin: 0 auto;
+}
+.card-body > p {
+	line-height: 30px;
+}
+.card a {
+	color: rgb(0, 98, 89);
+	font-weight: 700;
 }
 </style>

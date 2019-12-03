@@ -36,6 +36,10 @@
 	color: #fff;
 }
 
+.dark-fill {
+	background-color: #555555;
+	color: #fff;
+}
 /*---------按钮设置--------*/
 .zh-btn{
 	border: none;
@@ -59,6 +63,25 @@
 	height: 45px;
 }
 
+.btn {
+	border: none;
+	cursor: pointer;
+}
+
+.btn-lg {
+	width: 120px;
+	height: 35px;
+}
+
+.btn-rd {
+	border-radius: 20px;
+}
+
+.btn-circle {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+}
 /* 表单元素样式 */
 .zh-input-box{
 	display: block;
@@ -140,29 +163,55 @@
 	font-size: 13px;
 	color: #b4b4b4;
 }
-/* 边框 */
-.border {
-	border: 1px solid #ddd;
-	border-radius: 5px;
-}
 
 .pointer{
 	cursor: pointer;
 }
-/* .media-left {
+
+.nav-list {
+	width: 80%;
+	margin: 0 auto;
+	display: flex;
+	align-items: center;
+}
+
+.zh-media-wraaper {
+	display: flex;
+	min-height: 120px;
+	height: 180px;
+	margin: 10px;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.zh-media-left {
 	flex: 1 1 18%;
 	text-align: center;
 	margin-right: 15px;
 }
 
-.media-middle {
+.zh-media-middle {
 	flex: 1 1 60%;
 	margin-right: 15px;
 }
 
-.media-right {
+.zh-media-right {
 	flex: 1 1 22%;
 	height: 100%;
-} */
+}
+/* 下边框 */
+.border-bottom {
+	border-bottom: 1px solid #ddd;
+	padding-bottom: 10px;
+}
+/* 边框 */
+.border {
+	border: 1px solid #ddd;
+	border-radius: 5px;
+}
+.sub-title {
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.6);
+}
 
 

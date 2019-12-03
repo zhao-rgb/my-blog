@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="all">
 		<div class="zh-nav">
 			<div class="zh-nav-bar zh-fx-between">
 				<ul class="zh-list">
@@ -102,6 +102,10 @@ export default {
 </script>
 
 <style scoped>
+	.all{
+		background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
+		background-size: calc(100%);
+	}
 li {
 	margin-right: 100px;
 }

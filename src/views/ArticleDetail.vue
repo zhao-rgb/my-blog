@@ -2,7 +2,7 @@
 		<div class="zh-container border">
 			<h3>题:{{ article.title }}</h3>
 			<div class="box">
-					<img :src="getImages(article.avatar)" class="avatar-xs">
+					<img :src="getImages(article.avatar)" class="avatar-xs" @click="toDetail(article.userId)">
 					<span class="media gutter">{{ article.nickname }}</span>
 					<span class="media gutter">发表于{{ article.publishTime.date.year }}年{{ article.publishTime.date.month }}月{{ article.publishTime.date.day }}日</span>
 			</div>
@@ -46,6 +46,9 @@ export default {
 				let _u = _url.substring(8);
 				return 'https://images.weserv.nl/?url=' + _u;
 			}
+		},
+		toDetail(id) {
+			this.$router.push('/user/detail/' + id);
 		}
 	},
 	computed: {}

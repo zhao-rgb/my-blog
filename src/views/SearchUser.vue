@@ -1,12 +1,12 @@
 <template>
 	<div class="row">
 		<div v-for="(user, index) in users" :key="index" class="zh-col-12">
-			<div class="media-wraaper shadow">
-				<div class="media-left">
+			<div class="zh-media-wraaper zh-shadow">
+				<div class="zh-media-left">
 					<img :src="user.avatar" class="avatar-lg link" @click="toDetail(user.id)" />
 					<p>{{ user.nickname }}</p>
 				</div>
-				<div class="media-middle">
+				<div class="zh-media-middle">
 					<p>{{ user.introduction }}</p>
 					<p>
 						<span class="meta gutter">写了{{ user.articles }}篇文章</span>
@@ -14,7 +14,7 @@
 						<span class="meta gutter">关注了{{ user.follows }}人</span>
 					</p>
 				</div>
-				<div class="media-right"><button class="btn btn-lg btn-rd warning-fill">关注</button></div>
+				<div class="zh-media-right"><button class="btn btn-lg btn-rd warning-fill">关注</button></div>
 			</div>
 		</div>
 	</div>

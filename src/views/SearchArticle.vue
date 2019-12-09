@@ -1,14 +1,14 @@
 <template>
 	<div class="row">
 		<div v-for="(item, index) in articles" :key="index" class="zh-col-12">
-			<div class="media-wraaper shadow">
-				<div class="media-left">
+			<div class="zh-media-wraaper zh-shadow">
+				<div class="zh-media-left">
 					<img :src="item.avatar" class="avatar-lg link" />
 					<p>{{ item.nickname }}</p>
 					<strong>来自</strong>
 					<p>{{ item.topicName }}</p>
 				</div>
-				<div class="media-middle">
+				<div class="zh-media-middle">
 					<p @click="toDetail(item.id)" class="pointer">
 						<!-- <span>{{ item.id }}</span> -->
 						{{ item.title }}
@@ -19,7 +19,7 @@
 						<span class="meta">{{ item.likes }}喜欢</span>
 					</p>
 				</div>
-				<div class="media-right"><img :src="item.thumbnail" class="thumnail-xs" /></div>
+				<div class="zh-media-right"><img :src="item.thumbnail" class="thumnail-xs" /></div>
 			</div>
 		</div>
 	</div>

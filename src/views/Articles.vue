@@ -1,28 +1,49 @@
 <template>
-	<div class="container">
-		<div class="media-wraaper">
-			<div class="media" v-for="(article, index) in articles" :key="index">
-				<div class="media-left">
-					<img :src="article.avatar" class="bl-avatar-normal" />
-					<p class="sub-title">{{ article.nickname }}</p>
-				</div>
-				<div class="media-middle">
-					<h2 class="pointer" @click="toDetail(article.id)">{{ article.title }}</h2>
-					<p>{{ article.summary }}</p>
-					<p>
-						<span>{{ article.content }}</span>
-					</p>
-					<p class="kk">
-						<i class="iconfont" style="color: #e53935;">&#xe64a;</i>
-						<span class="di">{{ article.diamond }}</span>
-						<i class="iconfont">&#xe666;</i>
-						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont">&#xe630;</i>
-						<span>{{ article.comments }}</span>
-					</p>	
+	<div class="rows">
+		<div class="zh-col-6" v-for="(article, index) in articles" :key="index">
+			<div class="card zh-shadow flex flex-top-y">
+				<!-- <div class="card-image">
+						<img :src="article.avatar" class="sub-titlee " alt="" />
+						<span @click="toDetail(article.id)" class="card-title pointer">{{ article.title }}</span>
+					</div>
+					<div class="card-content article-content">
+						<div class="content">
+							
+							<span>{{ article.content.slice(0, 50) }}...</span>
+						</div>
+					</div>
+					<div class="card-tags">
+							<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+							<span class="di">{{ article.diamond }}</span>
+							<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+							<span class="jian">{{ article.likes }}</span>
+							<i class="iconfont">&#xe666;</i>
+							<span>{{ article.comments }}</span>
+					</div> -->
 
+				<div class="middle">
+					<div class="wrap">
+						<div class="front middle">
+							<img :src="article.avatar" class="sub-titlee " alt="" />
+							<span>{{ article.title }}</span>
+							
+						</div>
+
+						<div class="back middle">
+							<span @click="toDetail(article.id)" class="card-title pointer">阅读更多</span>
+							
+							<div class="contact-info">
+								<span>{{ article.content.slice(0, 50) }}...</span>
+								<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+								<span class="di">{{ article.diamond }}</span>
+								<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+								<span class="jian">{{ article.likes }}</span>
+								<i class="iconfont">&#xe666;</i>
+								<span>{{ article.comments }}</span>
+							</div>
+						</div>
+					</div>
 				</div>
-				<div class="media-right"><img :src="article.avatar" /></div>
 			</div>
 		</div>
 	</div>
@@ -35,14 +56,14 @@ export default {
 			articles: []
 		};
 	},
-	
+
 	created() {
 		this.axios.get('http://localhost:8080/api/article/hot').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
 		});
 	},
-	
+
 	methods: {
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
@@ -62,89 +83,134 @@ export default {
 </script>
 
 <style scoped>
-	.container{
-		margin-top: 100px;
+	.middle {
+	  display: flex;
+	  justify-content: center;
+	  align-items: center;
+	  flex-direction: column;
 	}
-	.media-wraaper {
-		width: 100%;
-		height: 100px;
-		padding: 10px;
+	.wrap {
+	  width: 300px;
+	  height: 500px;
+	  position: relative;
 	}
-	.media {
-		display: flex;
-		align-items: stretch;
-		justify-content: flex-start;
-		border-bottom: 1px solid #ddd;
-		border-radius: 5px;
-		background-color: #fff;
-		margin-bottom: 5px;
-		padding-top: 5px;
-		/* height: 250px; */
+	.wrap h2 {
+	  font-size: 40px;
+	  margin-bottom: 10px;
 	}
-	.media-left {
-		flex: 0 0 15%;
-		text-align: center;
-		line-height: 50px;
-		border-right: 1px solid #eee;
+	.front, .back {
+	  width: 100%;
+	  height: 100%;
+	  position: absolute;
+	  /* background: url(./bg.jpg); */
+	  background-size: cover;
+	  backface-visibility: hidden;
+	  box-shadow: 0 0 10px #2c3e50;
+	  transition: .8s;
 	}
-	.bl-avatar-normal{
-		height: 150px;
+	.front {
+	  transform: perspective(900px) rotateY(0deg);
 	}
-		
-	.media-middle {
-		flex: 1 1 60%;
-		padding-left: 10px;
-		padding-right: 10px;
-		line-height: 24px;
+	.back {
+	  transform: perspective(900px) rotateY(180deg);
 	}
-	.media-middle h4 {
-		font-weight: 600;
+	.back .contact-info a {
+	  display: inline-flex;
+	  justify-content: center;
+	  align-items: center;
+	  width: 40px;
+	  height: 40px;
+	  font-size: 20px;
+	  text-decoration: none;
+	  color: #2c3e50;
+	  border-radius: 50%;
 	}
-	.media-middle p {
-		font-size: 14px;
-		color: #aaa;
+	.back .contact-info a:hover {
+	  color: white;
+	  background-color: #2c3e50;
 	}
-	.media-right {
-		flex: 0 0 20%;
-		text-align: center;
-		margin-right: 10px;
+	.wrap:hover .front {
+	  transform: perspective(900px) rotateY(-180deg);
 	}
-	.media-right img {
-		width: 120px;
-		height: 100px;
-		border-radius: 10px;
-	}
-	
-	@font-face {
-	  font-family: 'iconfont';  /* project id 1434161 */
-	  src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot');
-	  src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot?#iefix') format('embedded-opentype'),
-	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff2') format('woff2'),
-	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff') format('woff'),
-	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.ttf') format('truetype'),
-	  url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.svg#iconfont') format('svg');
+	.wrap:hover .back {
+	  transform: perspective(900px) rotateY(00deg);
 	}
 	
-	.iconfont{
-	    font-family:"iconfont" !important;
-	    font-size:16px;font-style:normal;
-	    -webkit-font-smoothing: antialiased;
-	    -webkit-text-stroke-width: 0.2px;
-	    -moz-osx-font-smoothing: grayscale;
-		}
+	
+	
+.card-image {
+	width: 100%;
+	height: 55%;
+}
+.sub-titlee {
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+	height: 90%;
+}
+.rows {
+	display: flex;
+	flex-wrap: wrap;
+}
+.card {
+	display: flex;
+	flex-wrap: wrap;
+	width: 60%;
+	height: 520px;
+	background-size: 100%, 100%;
+	margin-bottom: 20px;
+	padding: 20px;
+}
+.content {
+	height: 20%;
+}
 
+.gg {
+	cursor: pointer;
+}
 
-         .di{
-			 margin-right: 15px;
-		 }
-		 
-		.jian{
-			margin-right: 15px;
-			
-			
-		}
-		.kk{
-			padding-top: 125px;
-		}
-	
+.di {
+	margin-right: 15px;
+}
+
+.jian {
+	margin-right: 15px;
+}
+.kk {
+	padding-top: 125px;
+}
+@font-face {
+	font-family: 'iconfont'; /* project id 1434161 */
+	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot');
+	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.svg#iconfont') format('svg');
+}
+
+.iconfont {
+	font-family: 'iconfont' !important;
+	font-size: 16px;
+	font-style: normal;
+	-webkit-font-smoothing: antialiased;
+	-webkit-text-stroke-width: 0.2px;
+	-moz-osx-font-smoothing: grayscale;
+}
+.box {
+	display: flex;
+	justify-content: space-around;
+	height: 70px;
+	padding: 10px;
+}
+.btn-follow {
+	background-color: #42c02e;
+	font-weight: 400;
+	font-size: 15px;
+	color: #fff;
+	padding: 5px 0;
+	width: 80px;
+	height: 30px;
+	border-radius: 40px;
+	display: inline-block;
+	text-align: center;
+}
 </style>

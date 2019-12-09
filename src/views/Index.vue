@@ -1,39 +1,57 @@
 <template>
-	<div class="zh-row">
+	<div class="rows">
 		<div class="zh-col-8">
 			<h3 class="border-bottom">热门文章</h3>
-			<div class="media" v-for="(article, index) in articles" :key="index">
-				<div class="media-left">
-					<p @click="toDetail(article.id)" class="gg">{{ article.title }}</p>
-					<span class="zh-meta">{{ article.content }}</span>
-					<p class="kk">
-						<i class="iconfont" style="color: #e53935;">&#xe64a;</i>
-						<span class="di">{{ article.diamond }}</span>
-						<i class="iconfont">&#xe666;</i>
-						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont">&#xe630;</i>
-						<span>{{ article.comments }}</span>
-					</p>
+			<div class="rows">
+				<div class="zh-col-6" v-for="(article, index) in articles" :key="index">
+					<div class="card zh-shadow flex flex-top-y">
+						<div class="card-image">
+							<img :src="article.avatar" class="sub-titlee " alt="" />
+							<span @click="toDetail(article.id)" class="card-title pointer">{{ article.title }}</span>
+						</div>
+						<div class="card-content article-content">
+							<div class="content">
+								<span>{{ article.content.slice(0, 50) }}...</span>
+							</div>
+						</div>
+						<div class="card-tags">
+							<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+							<span class="di">{{ article.diamond }}</span>
+							<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+							<span class="jian">{{ article.likes }}</span>
+							<i class="iconfont">&#xe666;</i>
+							<span>{{ article.comments }}</span>
+						</div>
+					</div>
 				</div>
-
-				<div class="media-right"><img :src="article.avatar" class="sub-title" /></div>
 			</div>
 		</div>
+
 		<div class="zh-col-4 ">
 			<h3 class="border-bottom">热门作者</h3>
 			<div v-for="(user, index) in users" :key="index" class="row">
 				<div class="zh-col-12 border box">
+					<div class="flex-center-y"><img :src="user.avatar" class="avatar-xs bian" @click="toDetailuser(user.id)" /></div>
 					<div class="flex-center-y">
-						<img :src="user.avatar" class="avatar-xs pointer"  @click="toDetailuser(user.id)"/>
 						<p class="sub-title">{{ user.nickname }}</p>
-					</div>
-					<div class="flex-center-y">
 						<p class="meta">{{ user.fans }}个粉丝</p>
 						<p class="meta">写了{{ user.articles }}篇文章</p>
 					</div>
 					<div class="flex-center-y"><button class="zh-btn btn-follow">关注</button></div>
 				</div>
 			</div>
+			<div class="biaoqian">
+				<span>
+					我们不停的翻弄着回忆，却再也找不回那时的自己 人生，是一场盛大的遇见。若你懂得，就请珍惜。 无论下多久的雨，最后都会有彩虹；无论你多么悲伤，要相信幸福在前方等候.
+				</span>
+			</div>
+			
+			
+			<div class="music-size">			
+				<video controls="" autoplay="" name="media"><source src="http://sc1.111ttt.cn:8282/2018/1/03m/13/396131232171.m4a" type="audio/mp4" /></video>
+			</div>
+			
+			
 		</div>
 	</div>
 </template>
@@ -65,8 +83,8 @@ export default {
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
 		},
-		toDetailuser(id){
-			this.$router.push('/user/detail/' +id);
+		toDetailuser(id) {
+			this.$router.push('/user/detail/' + id);
 		}
 	},
 	computed: {
@@ -79,22 +97,86 @@ export default {
 </script>
 
 <style scoped>
-.media {
+.bian {
+	cursor: pointer;
+	-webkit-transition: width 2s, height 2s, -webkit-transform 2s;
+	transition: width 2s, height 2s, transform 2s;
+}
+.bian:hover {
+	-webkit-transform: rotate(360deg);
+	transform: rotate(360deg);
+}
+
+.biaoqian {
+	width: 100%;
+	height: 200px;
+	/* background: red; */
+	position: relative;
+	animation: mymove 5s infinite;
+	-webkit-animation: mymove 5s infinite;
+}
+@keyframes mymove {
+	0% {
+		top: 0px;
+	}
+	25% {
+		top: 200px;
+	}
+	75% {
+		top: 50px;
+	}
+	100% {
+		top: 100px;
+	}
+	from {
+		background: #008000;
+	}
+	to {
+		background: #555555;
+	}
+}
+
+@-webkit-keyframes mymove {
+	0% {
+		top: 0px;
+	}
+	25% {
+		top: 200px;
+	}
+	75% {
+		top: 50px;
+	}
+	100% {
+		top: 100px;
+	}
+	/* from {background: red;} */
+}
+
+.card-image {
+	width: 100%;
+	height: 55%;
+	overflow: hidden;
+	position: relative;
+}
+.sub-titlee {
+	font-size: 15px;
+	color: rgba(0, 0, 0, 0.6);
+	width: 100%;
+}
+.rows {
 	display: flex;
-	align-items: stretch;
-	justify-content: flex-start;
-	border-bottom: 1px solid #ddd;
-	border-radius: 5px;
-	background-color: #fff;
-	margin-bottom: 5px;
-	padding-top: 5px;
+	flex-wrap: wrap;
 }
-.media-left {
-	flex: 1 1 60%;
+.card {
+	display: flex;
+	flex-wrap: wrap;
+	width: 60%;
+	height: 520px;
+	background-size: 100%, 100%;
+	margin-bottom: 20px;
+	padding: 20px;
 }
-.media-right {
-	flex: 1 1 30%;
-}
+
 .gg {
 	cursor: pointer;
 }
@@ -111,10 +193,10 @@ export default {
 }
 @font-face {
 	font-family: 'iconfont'; /* project id 1434161 */
-	src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot');
-	src: url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434161_x6ye9jb8msd.svg#iconfont') format('svg');
+	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot');
+	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff2') format('woff2'),
+		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.ttf') format('truetype'),
+		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.svg#iconfont') format('svg');
 }
 
 .iconfont {

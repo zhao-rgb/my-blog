@@ -38,6 +38,12 @@
 								<li class="nav-item border-bottom">留言板</li>
 								<li class="nav-item border-bottom">个人资料</li>
 							</ul>
+
+							<div class="main">
+								<ul class="items"></ul>
+								<textarea name="" id="text" cols="30" rows="10" v-model="commentDto.content"></textarea>
+								<button @click="ok()">点击留言</button>
+							</div>
 						</div>
 						<hr />
 						<div class="third">
@@ -64,7 +70,7 @@
 							<div class="zh-media-wraaper shadow">
 								<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
 								<div class="zh-media-middle">
-									<p class="title" @click="toDetail(item.article.userId)">{{ item.article.title }}</p>
+									<p class="title" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
 									<hr />
 									<p class="sub-title">{{ item.article.content }}</p>
 								</div>
@@ -87,6 +93,10 @@ export default {
 			userVo: {
 				user: {},
 				articleList: {}
+			},
+			commentDto: {
+				content: '',
+				nickname: ''
 			}
 		};
 	},
@@ -117,6 +127,43 @@ export default {
 		},
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
+		},
+
+		ok() {
+			var item = document.getElementsByClassName('items')[0]; //获取ul和下标；
+			var val = text.value; //把textarea的内容取出来
+			var li = document.createElement('li'); //创建li容器装textarea里输入的内容
+			li.innerHTML = val; //创建li容器装textarea里输入的内容
+			item.appendChild(li); //插入节点，把li放入合适位置
+			text.value = '';
+			var btn = document.createElement('button'); //创建按钮，用来删除li内容
+			btn.innerHTML = '删除';
+			li.appendChild(btn); //把按钮插入li后面
+
+			// this.axios.post('http://localhost:8080/api/comment', JSON.stringify(this.commentDto)).then(response => {
+			// 	if (response.data.msg == '注册成功') {
+			// 		alert('注册成功');
+			// 		// 将后台的用户信息存入本地存储
+			// 		localStorage.comment = JSON.stringify(response.data.data);
+			// 		// 路由跳转
+			// 		// this.$router.push('/');
+			// 	}
+			// });
+			this.axios({
+				method: 'post',
+				url: this.GLOBAL.baseUrl + '/comment',
+				data: JSON.stringify(this.commentDto)
+			}).then(res => {
+				if (res.data.msg === '注册成功') {
+					alert('留言成功');
+					localStorage.setItem('comment', JSON.stringify(res.data.data));
+					// this.$router.push('/');
+				}
+			});
+
+			btn.onclick = function() {
+				item.removeChild(li); //remoceChid删除节点，使button按钮生效
+			};
 		}
 	},
 	computed: {}
@@ -137,6 +184,7 @@ export default {
 .cover {
 	width: 90%;
 	height: 100%;
+	margin-left: 38px;
 }
 .love {
 	display: flex;
@@ -190,7 +238,7 @@ export default {
 	left: 0;
 	right: 0;
 	z-index: 999;
-	background-color: rgba(246, 246, 246);
+	background-color: rgba(172, 91, 155);
 	cursor: pointer;
 }
 li {

@@ -21,25 +21,9 @@
 				<input type="text" placeholder="请设置用户名" v-model="userDto.nickname" />
 				<input type="password" placeholder="请设置6-16位密码" minlength="6" maxlength="16" v-model="userDto.password" />
 				<input type="password" placeholder="请确认密码" minlength="6" maxlength="16" v-model="pwd2" />
-				<!-- <div class="tel-box">
-					<div class="tel-code-box">
-						<input
-							class="input-tel"
-							type="tel"
-							placeholder="请绑定手机号"
-							minlength="11"
-							maxlength="11"
-							v-model="userDto.mobile"
-							:disabled="yzmDisabled"
-							@input.prevent="checkLength"
-						/>
-						<input type="text" class="input-tel" placeholder="请输入验证码" />
-					</div>
-					<input class="input-tel-btn" :class="{ regist: hover }" type="submit" :value="msg" :disabled="codeDisabled" @click="getCode" />
-				</div> -->
 				
 				<input
-					class="input-tel"
+					
 					type="tel"
 					placeholder="请绑定手机号"
 					minlength="11"
@@ -359,18 +343,6 @@ input {
 .tel-code-box {
 	display: flex;
 	flex-direction: column;
-}
-.input-tel {
-	width: 90%;
-	height: 25px;
-	font-size: 20px;
-}
-/* 发送验证码的按钮设计 */
-.input-tel-btn {
-	font-size: 20px;
-	height: 30px;
-	width: 40%;
-	background-color: #9b9b9b;
 }
 .regist {
 	background-color: rgb(227, 242, 253);

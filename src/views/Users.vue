@@ -1,22 +1,25 @@
 <template>
-	<div>
-		<div class="row">
-			<div class="zh-col-4" v-for="(user, index) in users" :key="index">
-				<div class="card zh-shadow flex flex-top-y">
-					<div class="card-head flex zh-flex-center">
-						<p class="zh-title">{{ user.nickname }}</p>
-						<router-link :to="{ path: '/user/detail/' + user.id }"><img :src="user.avatar" /></router-link>
-					</div>
-					<div class="card-body flex zh-flex-left">
-						<p class="zh-sub-title">{{user.introduction}}</p>
-						<p class="meta"><strong>来自：{{user.address}}</strong></p>
-						<p class="meta">{{user.articles}}篇文章，{{user.fans}}个粉丝</p>
-					</div>
-				</div>
-			</div>
-		</div>
+	
+	<div class="container">
+	    <div class="row">
+	        <div class="zh-col-4 " v-for="(user, index) in users" :key="index">
+	            <div class="our-team">
+	                <div class="pic">
+	                    <p class="description">描述:{{user.introduction}}</p>
+	                    <img :src="user.avatar" />
+	                </div>
+	                <h3 class="title">{{ user.nickname }}</h3>
+	                <span class="post">生日:{{user.birthday.year}}年{{user.birthday.year}}月{{user.birthday.year}}日</span>
+					<h3 class="title">{{user.articles}}篇文章，{{user.fans}}个粉丝</h3>
+	                <ul class="social">
+	                    <li><i class="iconfont" style="color: rgb(24, 172, 252)">&#xe616;</i></li>						
+						<li><h3 @click="toDetail(user.id)" class="pointer">进入空间</h3></li>	
+	                </ul>
+	            </div>
+	        </div>
+	    </div>
 		<div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
-	</div>
+		</div>
 </template>
 
 <script>
@@ -63,6 +66,9 @@ export default {
 		},
 		go(page) {
 			window.location.href = page;
+		},
+		toDetail(id) {
+			this.$router.push('/user/detail/' + id);
 		}
 	},
 	computed: {
@@ -78,10 +84,10 @@ export default {
 </script>
 
 <style scoped>
-.card {
+/* .card {
 	width: 90%;
 	height: 300px;
-	/* background-image: url(../assets/img/user.png); */
+	 background-image: url(../assets/img/user.png); 
 	background-size: 100%, 100%;
 	margin-bottom: 50px;
 	padding: 20px;
@@ -109,5 +115,92 @@ export default {
 .card a {
 	color: rgb(0, 98, 89);
 	font-weight: 700;
-}
+} */
+ .our-team{
+     padding-bottom: 20px;
+     text-align: center;
+ }
+ .our-team .pic{
+     display: inline-block;
+     width: 200px;
+     height: 200px;
+     border-radius: 50%;
+     background: #ff595e;
+     padding: 70px 20px 30px;
+     margin-bottom: 20px;
+     position: relative;
+ }
+ .our-team .description{
+     font-size: 16px;
+	 font-weight: 700;
+     color: #fff;
+ }
+ .our-team .pic img{
+     width: 101%;
+     height: 101%;
+     border-radius: 50%;
+     position: absolute;
+     top: -1px;
+     left: -1px;
+     transition: all 0.6s ease 0s;
+ }
+ .our-team:hover .pic img{
+     transform: rotate(-120deg);
+     transform-origin: 95% 40% 0;
+ }
+ .our-team .title{
+     display: block;
+     font-size: 20px;
+     font-weight: 700;
+     color: #7740ff;
+     letter-spacing: 1px;
+     margin-bottom: 5px;
+ }
+ .our-team .post{
+     display: block;
+     font-size: 15px;
+     color: #333;
+     text-transform: capitalize;
+     margin-bottom: 10px;
+     position: relative;
+ }
+ .our-team .post:after{
+     content: "";
+     width: 30px;
+     height: 3px;
+     background: #eee;
+     margin: 0 auto;
+     position: absolute;
+     bottom: -10px;
+     left: 0;
+     right: 0;
+ }
+ .our-team .social{
+     padding: 0;
+     margin: 25px 0 0 0;
+     list-style: none;
+ }
+ .our-team .social li{
+     display: inline-block;
+     margin-right: 5px;
+ }
+ .our-team .social li .iconfont{
+     display: block;
+     width: 35px;
+     height: 35px;
+     border-radius: 50%;
+     line-height:35px;
+     background: #7740ff;
+     font-size: 15px;
+     color: #fff;
+ }  
+ .our-team .social li .iconfont:hover{
+     background: #ff595e;
+ }
+ @media only screen and (max-width: 990px){
+     .our-team{ margin-bottom: 30px; }
+ }
+ @media only screen and (max-width: 767px){
+     .our-team{ overflow: hidden; }
+ }                
 </style>

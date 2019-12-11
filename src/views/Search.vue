@@ -29,6 +29,7 @@
 <style scoped>
 	ul {
 		width: 100%;
+		margin-top: 70px;
 	}
 	li {
 		width: 100%;

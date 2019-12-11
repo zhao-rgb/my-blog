@@ -7,8 +7,10 @@
 					<li><router-link to="/topic">专题</router-link></li>
 					<li><router-link to="/article">文章</router-link></li>
 					<li><router-link to="/user">作者</router-link></li>
-					<li class="nav-item"><input type="text" class="input-box" placeholder="搜索" v-model="keywords" /></li>
-					<li class="nav-item"><button class="btn btn-lg btn-rd dark-border" @click="search">搜索</button></li>
+					<li class="nav-item">
+						<div class="bar1"><input type="text" class="input-box" placeholder="搜索" v-model="keywords" />
+						<button class="btn " @click="search"></button></div>
+					</li>
 				</ul>
 				<div class="changeBox">
 					<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
@@ -18,14 +20,16 @@
 			</div>
 		</div>
 
-		<div class="carousel-wrap">
-			<transition-group tag="ul" class="slide-ul" name="slide">
-				<li v-for="(item, index) in slideList" :key="index" v-show="index === currentIndex" @mouseenter="stop" @mouseleave="go">
-					<a :href="item.url"><img :src="item.image" :alt="item.description" /></a>
-				</li>
-			</transition-group>
-			<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change(index)"></span></div>
-		</div>
+		<!-- 
+			<div class="carousel-wrap">
+				<transition-group tag="ul" class="slide-ul" name="slide">
+					<li v-for="(item, index) in slideList" :key="index" v-show="index === currentIndex" @mouseenter="stop" @mouseleave="go">
+						<a :href="item.url"><img :src="item.image" :alt="item.description" /></a>
+					</li>
+				</transition-group>
+				<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change(index)"></span></div>
+			</div> -->
+		
 
 		<router-view class="zh-container" />
 	</div>
@@ -103,7 +107,7 @@ export default {
 
 <style scoped>
 .all {
-	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
+	background-image: url('https://i0.hippopx.com/photos/811/608/908/minimalistic-tree-lifts-fog-preview.jpg');
 	background-size: calc(100%);
 }
 li {
@@ -192,4 +196,27 @@ li {
 .slide-leave {
 	transform: translateX(0);
 }
+       .bar1 input {
+            border: 2px solid black;
+            border-radius: 5px;
+            background: #F9F0DA;
+            color: #9E9C9C;
+			width: 200px;
+			height: 30px;
+			margin-right: 10px;
+        }
+        .bar1 button {
+             width: 50px;
+			 height: 28px;
+            background: gray;
+            border-radius:5px;
+        }
+        .bar1 button:before {
+            content: "搜索";
+            font-family: FontAwesome;
+            font-size: 16px;
+            color: #F9F0DA;
+        }
+   
+        
 </style>

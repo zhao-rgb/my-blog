@@ -1,17 +1,18 @@
-<template>
-	<div class="rows">
+<template>	
+	<div class="rows">	
 		<div class="zh-col-8">
 			<h3 class="border-bottom">热门文章</h3>
 			<div class="rows">
 				<div class="zh-col-6" v-for="(article, index) in articles" :key="index">
 					<div class="card zh-shadow flex flex-top-y">
+						<div id="yidong"></div>
 						<div class="card-image">
-							<img :src="article.avatar" class="sub-titlee " alt="" />
-							<span @click="toDetail(article.id)" class="card-title pointer">{{ article.title }}</span>
+							<img :src="article.avatar" class="sub-titlee " alt="" />							
 						</div>
 						<div class="card-content article-content">
+							<span @click="toDetail(article.id)" class="zh-title pointer">标题:{{ article.title }}</span>
 							<div class="content">
-								<span>{{ article.content.slice(0, 50) }}...</span>
+								<span class="zh-sub-title">{{ article.content.slice(0, 50) }}...</span>
 							</div>
 						</div>
 						<div class="card-tags">
@@ -22,7 +23,9 @@
 							<i class="iconfont">&#xe666;</i>
 							<span>{{ article.comments }}</span>
 						</div>
+					
 					</div>
+					
 				</div>
 			</div>
 		</div>
@@ -85,7 +88,8 @@ export default {
 		},
 		toDetailuser(id) {
 			this.$router.push('/user/detail/' + id);
-		}
+		},
+	
 	},
 	computed: {
 		// 解决403图片缓存问题
@@ -97,6 +101,50 @@ export default {
 </script>
 
 <style scoped>
+	.card-tags{
+		margin-left: 60px;
+	}
+	
+	
+	
+	#yidong {
+		border: 1px solid white;
+		width: 10px;
+		height: 10px;
+		border-radius: 10px;
+		position: relative;
+		animation: move 5s infinite;
+	}
+	@keyframes move {
+		0% {
+			top: 0%;
+			left: 0%;
+			background: red;
+		}
+		25% {
+			top: 0%;
+			left: 100%;
+			background: blue;
+		}
+		50% {
+			top: 95%;
+			left: 100%;
+			background: yellow;
+		}
+		75% {
+			top: 90%;
+			left: -4%;
+			background: green;
+		}
+		100% {
+			top: 0px;
+			left: -4%;
+			background: deeppink;
+		}
+	}
+
+
+
 .bian {
 	cursor: pointer;
 	-webkit-transition: width 2s, height 2s, -webkit-transform 2s;
@@ -170,11 +218,12 @@ export default {
 .card {
 	display: flex;
 	flex-wrap: wrap;
-	width: 60%;
-	height: 520px;
+	width: 80%;
+	height: 420px;
 	background-size: 100%, 100%;
-	margin-bottom: 20px;
+	margin: 20px;
 	padding: 20px;
+	background-color: gainsboro;
 }
 
 .gg {

@@ -32,10 +32,10 @@ ul {
 }
 
 /* -----------布局设置---------- */
-.zh-container {
+.zh-container {	
 	width: 80%;
 	margin: auto;
-
+	padding-top: 80px;
 }
 
 .zh-row {

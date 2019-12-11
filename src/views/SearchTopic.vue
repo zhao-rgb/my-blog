@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div v-for="(item, index) in topics" :key="index" class="zh-col-12">
-			<div class="zh-media-wraaper zh-shadow">
+			<div class="zh-media-wraaper zh-shadow m">
 				<div class="zh-media-left">
 					<img :src="item.logo" class="avatar-lg link" />
 					<p>{{ item.topicName }}</p>

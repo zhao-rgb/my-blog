@@ -1,7 +1,7 @@
 <template>
 	<div class="row">
 		<div v-for="(user, index) in users" :key="index" class="zh-col-12">
-			<div class="zh-media-wraaper zh-shadow">
+			<div class="zh-media-wraaper zh-shadow m">
 				<div class="zh-media-left">
 					<img :src="user.avatar" class="avatar-lg link" @click="toDetail(user.id)" />
 					<p>{{ user.nickname }}</p>

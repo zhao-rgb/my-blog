@@ -113,7 +113,7 @@
 	left: 0;
 	right: 0;
 	z-index: 999;
-	/* background-color: #009688; */
+	 background-color: gray; 
 }
 
 .zh-nav-bar {
@@ -221,6 +221,9 @@
 .row{
 	display: flex;
 	flex-wrap: wrap;
+}
+.m{
+	margin-top: 70px;
 }
 
 

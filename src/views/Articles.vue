@@ -1,7 +1,7 @@
 <template>
 	<div class="rows">
-		<div class="zh-col-6" v-for="(article, index) in articles" :key="index">
-			<div class="card zh-shadow flex flex-top-y">
+		<div class="zh-col-4" v-for="(article, index) in articles" :key="index">
+			<!-- <div class="card zh-shadow flex flex-top-y"> -->
 				<!-- <div class="card-image">
 						<img :src="article.avatar" class="sub-titlee " alt="" />
 						<span @click="toDetail(article.id)" class="card-title pointer">{{ article.title }}</span>
@@ -21,30 +21,41 @@
 							<span>{{ article.comments }}</span>
 					</div> -->
 
-				<div class="middle">
+				<div class="middle zh-shadow flex flex-top-y">
 					<div class="wrap">
 						<div class="front middle">
 							<img :src="article.avatar" class="sub-titlee " alt="" />
-							<span>{{ article.title }}</span>
-							
+							<span class="o" style="color: white;">标题:{{ article.title }}</span>
+							<div class="b">
+								<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+								<span class="di" style="color: white;">{{ article.diamond }}</span>
+								<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+								<span class="jian" style="color: white;">{{ article.likes }}</span>
+								<i class="iconfont">&#xe666;</i>
+								<span style="color: white;">{{ article.comments }}</span>
+							</div>
 						</div>
 
 						<div class="back middle">
-							<span @click="toDetail(article.id)" class="card-title pointer">阅读更多</span>
+							<span @click="toDetail(article.id)" class="card-title pointer border" style="color: whitesmoke; font-size: 18px; font-weight: 700;">阅读更多</span>
 							
 							<div class="contact-info">
-								<span>{{ article.content.slice(0, 50) }}...</span>
-								<i class="iconfont" style="color: #e53935;">&#xe633;</i>
-								<span class="di">{{ article.diamond }}</span>
-								<i class="iconfont" style="color: #e53935;">&#xe630;</i>
-								<span class="jian">{{ article.likes }}</span>
-								<i class="iconfont">&#xe666;</i>
-								<span>{{ article.comments }}</span>
+								<span style="color: white; margin-top: 50px;">{{ article.content.slice(0, 50) }}...</span>
+								<div class="b">
+									<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+									<span class="di" style="color: white;">{{ article.diamond }}</span>
+									<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+									<span class="jian" style="color: white;">{{ article.likes }}</span>
+									<i class="iconfont">&#xe666;</i>
+									<span style="color: white;">{{ article.comments }}</span>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+				
+				
+			<!-- </div> -->
 		</div>
 	</div>
 </template>
@@ -90,19 +101,17 @@ export default {
 	  flex-direction: column;
 	}
 	.wrap {
-	  width: 300px;
-	  height: 500px;
+	  width: 250px;
+	  height: 300px;
 	  position: relative;
-	}
-	.wrap h2 {
-	  font-size: 40px;
-	  margin-bottom: 10px;
+	  padding-bottom: 20px;
+	  margin: 20px;
 	}
 	.front, .back {
 	  width: 100%;
 	  height: 100%;
 	  position: absolute;
-	  /* background: url(./bg.jpg); */
+	  background: url(../assets/img/5.jpg);
 	  background-size: cover;
 	  backface-visibility: hidden;
 	  box-shadow: 0 0 10px #2c3e50;
@@ -146,7 +155,13 @@ export default {
 	font-size: 15px;
 	color: rgba(0, 0, 0, 0.6);
 	width: 100%;
-	height: 90%;
+	height: 65%;
+}
+.o{
+	height: 25%;
+}
+.b{
+	height: 10%;
 }
 .rows {
 	display: flex;

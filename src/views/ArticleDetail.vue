@@ -6,7 +6,7 @@
 			<h1>我不养猫，我只养你</h1>			
 		</div> -->
 		<!-- </div> -->
-		<div class="all">
+		<div class="all" v-if="show">
 			<div class="zh-navs">
 				<div class="zh-nav-bar zh-fx-between">
 					<ul class="zh-list">
@@ -31,23 +31,61 @@
 						<span class="di">{{ article.diamond }}</span>
 						<i class="iconfont" >&#xe630;</i>
 						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont">&#xe666;</i>
+						<i class="iconfont" @click="changeshow()">&#xe666;</i>
 						<span>{{ article.comments }}</span>
 					</div>
 					<div class="card"><p v-html="text"></p></div>
 				</div>
 			</div>
+			
+			
+			
+			
+			
+			
+			
+		</div>
+		<div class="viewcontainer" v-if="!show">
+			<fieldset>
+						<legend>评论</legend>
+						<div class="nav-item border" v-for="(item, index) in comment" :key="index" >
+							<div class="card-left "><img :src="item.author.avatar" class="avatar-xs bian"/></div>
+							 <div class="card-right ">
+								<p class="cz-sub-title" >{{ item.author.nickname }}</p>								
+								<p class="border" >{{ item.comment.content }}</p>
+								<p class="cz-meta" >
+									{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
+									{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
+								</p>
+							</div> 
+						</div>					
+					</fieldset>
+					<div class="border" >
+						<textarea rows="10" cols="30" placeholder="发表评论:" v-model="writeComment.content" style="width: 80%;height: 200px;margin-left: 100px;margin-top: 20px;margin-bottom: 20px;"></textarea>
+						<button class="zh-btn-large shadow" @click="release" v-on:click="changeshow()" style="margin-left: 600px;margin-bottom: 20px;width: 200px;height: 40px;background-color: orange;">发布</button>
+					</div>
 		</div>
 	</div>
 </template>
-
 <script>
 export default {
 	data() {
 		return {
+			
+			user: JSON.parse(localStorage.getItem('user')),
+			comment:{},
+			
+			
 			articleDetail: null,
 			article: null,
-			text: null
+			text: null,
+			
+			writeComment: {
+				articleId: 0,
+				userId: 0,
+				content: ''
+			},
+			show:'true'
 		};
 	},
 	created() {
@@ -64,6 +102,16 @@ export default {
 			this.article = this.articleDetail[0];
 			this.text = this.articleDetail[0].text;
 		});
+		
+		
+		
+		this.axios.get('http://localhost:8080/api/comment/' + articlesId).then(res => {
+			console.log(res.data.data);
+			this.comment = res.data.data;
+			
+		});
+		
+		
 	},
 	methods: {
 		// 解决403图片缓存问题
@@ -75,13 +123,66 @@ export default {
 		},
 		toDetail(id) {
 			this.$router.push('/user/detail/' + id);
-		}
+		},
+		
+		
+		
+		
+		//发评论
+				release() {
+					if(this.writeComment.content==''){
+						alert("类容不能为空")
+						return;
+					}
+					//获取网页地址url
+					var query = window.location.href;
+					//锁定到最后一个"/"的位置
+					var begin = query.lastIndexOf('/') + 1;
+					//取出地址中最后的id值
+					var articlesId = query.substring(begin);
+					
+					this.writeComment.articleId = articlesId;
+					//alert(articlesId);
+					this.writeComment.userId = this.user.id;
+					//alert(this.user.id);
+					// alert(this.comment.content);
+					this.axios.post(this.GLOBAL.baseUrl + '/comment', this.writeComment)
+					.then(res => {
+						// alert(res.data.msg);
+						this.$router.go(0);
+					});
+				},
+				changeshow(){
+					this.show=!this.show;
+				},
+				
+		
 	},
 	computed: {}
 };
 </script>
-
 <style scoped>
+	.nav-item{
+		margin: 10px;
+	}
+	.cz-sub-title{
+		display: flex;
+		align-content: flex-start;
+		font-size: 16px;
+		font-weight: 600;
+	}
+	.card-right .border{
+		margin: 10px;
+	}
+	.cz-meta{
+		display: flex;
+		justify-content: flex-end;
+	}
+	.border{
+		display: flex;
+		flex-direction: column;
+	}
+	
 	.card{
 		text-indent: 2em;
 		font-weight: 700;

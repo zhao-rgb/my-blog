@@ -9,10 +9,11 @@
 	                    <img :src="user.avatar" />
 	                </div>
 	                <h3 class="title">{{ user.nickname }}</h3>
-	                <span class="post">生日:{{user.birthday.year}}年{{user.birthday.year}}月{{user.birthday.year}}日</span>
+	                <span class="post">生日:{{user.birthday.year}}年{{user.birthday.month}}月{{user.birthday.day}}日</span>
 					<h3 class="title">{{user.articles}}篇文章，{{user.fans}}个粉丝</h3>
+					<button class="btn btn-lg btn-rd dark-fill" >关注</button>
 	                <ul class="social">
-	                    <li><i class="iconfont" style="color: rgb(24, 172, 252)">&#xe616;</i></li>						
+	                    <li><i class="iconfont" style="color: gray;" @click="toDetail(user.id)">&#xe616;</i></li>						
 						<li><h3 @click="toDetail(user.id)" class="pointer">进入空间</h3></li>	
 	                </ul>
 	            </div>
@@ -152,7 +153,7 @@ export default {
      display: block;
      font-size: 20px;
      font-weight: 700;
-     color: #7740ff;
+     color: black;
      letter-spacing: 1px;
      margin-bottom: 5px;
  }
@@ -190,7 +191,7 @@ export default {
      height: 35px;
      border-radius: 50%;
      line-height:35px;
-     background: #7740ff;
+     background: blue;
      font-size: 15px;
      color: #fff;
  }  

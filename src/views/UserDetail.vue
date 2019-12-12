@@ -1,5 +1,6 @@
 <template>
-	<div class="all">
+	<div>
+	<div class="all" v-if="show">
 		<div class="zh-navs">
 			<div class="zh-nav-bar zh-fx-between">
 				<ul class="zh-list">
@@ -15,7 +16,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="zh-containers ">
+		<div class="zh-containers " >
 			<div class="row">
 				<div class="zh-col-4 ">
 					<div class="ku ">
@@ -34,8 +35,7 @@
 							</ul>
 							<hr />
 							<ul class="title ">
-								<li class="nav-item border-bottom">写文章</li>
-								<li class="nav-item border-bottom">留言板</li>
+								<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
 								<li class="nav-item border-bottom">个人资料</li>
 							</ul>
 
@@ -75,25 +75,52 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> 
+	</div>
+	<div class="writearticle border" v-if="!show">
+		<span style="color: white;">作者ID: {{this.user.id}} </span>			
+		<div class="con">
+			<div class="con-head">
+				<input type="text" placeholder="标题:" v-model="writeArticle.title">
+				<input type="text" placeholder="简介:" v-model="writeArticle.content">
+				<input type="text" placeholder="专题ID::" v-model="writeArticle.topicId">
+				<input type="text" placeholder="输入图片地址:" v-model="writeArticle.cover">
+			</div>
+			<div class="con-body">				
+				<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.text"></textarea>
+				<button @click="changeshow()" v-on:click="release">发布</button>
+			</div>
+		</div>       				
+		
+	</div>
 	</div>
 </template>
 
 <script>
 export default {
 	data() {
-		// return {
-		// 	user: JSON.parse(localStorage.getItem('user'))
-		// };
+		 // return {
+		 // 	user: JSON.parse(localStorage.getItem('user'))
+		 // };
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			userVo: {
 				user: {},
 				articleList: {}
 			},
-			commentDto: {
+			
+			writeArticle: {
+				topicId:'',
+				userId: '',
+				title:'',
 				content: '',
-				
-			}
+				cover:'',
+				diamond:0,
+				comments:0,
+				likes:0,
+				text:''
+			},
+			show:'true'
 		};
 	},
 	created() {
@@ -124,6 +151,25 @@ export default {
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
 		},
+		release() {
+			if(this.writeArticle.text==''||this.writeArticle.text==''||this.writeArticle.content==''||this.writeArticle.topicId==''){
+				alert("类容不能为空")
+				return;
+			}			
+			this.writeArticle.userId= this.user.id;
+			//alert(this.user.id);
+			// alert(this.comment.content);
+			this.axios.post(this.GLOBAL.baseUrl + '/article/new', this.writeArticle)
+			.then(res => {
+				// alert(res.data.msg);
+				this.$router.go(0);
+			});
+			alert("发布成功")
+			
+		},
+		changeshow(){			
+			this.show=!this.show;
+		},
 
 	},
 	computed: {}
@@ -131,6 +177,37 @@ export default {
 </script>
 
 <style scoped>
+	.writearticle{
+		background-image: url(../assets/img/4.jpg);		
+		padding: 20px;
+		height: 800px;
+	}
+	.con .con-head{
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 20px;
+	}
+	.con .con-head input{
+		width: 500px;
+		height: 40px;
+		margin-top: 20px;
+	}
+	.con .con-body{
+		width: 500px;
+		height: 40px;
+		margin-top: 20px;
+	}
+	.con .con-body textarea{
+		width: 800px;
+		height: 100px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	.con .con-body button{			
+		width: 100px;
+		height: 40px;
+		background-color: orange;
+	}
 .all {
 	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
 	background-size: calc(100%);

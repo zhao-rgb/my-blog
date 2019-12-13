@@ -36,10 +36,8 @@
 							<hr />
 							<ul class="title ">
 								<li class="nav-item border-bottom" v-on:click="changeshow()">写文章</li>
-								<li class="nav-item border-bottom">个人资料</li>
-							</ul>
-
-							
+								<li class="nav-item border-bottom" v-on:click="changeshow()">修改个人资料</li>
+							</ul>							
 						</div>
 						<hr />
 						<div class="third">
@@ -77,7 +75,9 @@
 			</div>
 		</div> 
 	</div>
-	<div class="writearticle border" v-if="!show">
+	
+	
+<!-- 	<div class="writearticle border" v-if="!show">
 		<span style="color: white;">作者ID: {{this.user.id}} </span>			
 		<div class="con">
 			<div class="con-head">
@@ -90,9 +90,23 @@
 				<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.text"></textarea>
 				<button @click="changeshow()" v-on:click="release">发布</button>
 			</div>
-		</div>       				
-		
+		</div>       						
+	</div> -->
+	
+	
+	<div class="update" v-if="!show">
+		<input type="text" placeholder="昵称" v-model="updateuser.nickname">
+		<input type="text" placeholder="性别" v-model="updateuser.gender">
+		<input type="text" placeholder="生日" v-model="updateuser.birthday">
+		<input type="text" placeholder="地址" v-model="updateuser.address">
+		<input type="text" placeholder="简介" v-model="updateuser.introduction">
+		<input type="text" placeholder="主页" v-model="updateuser.homepage">
+		<input type="text" placeholder="id" v-model="user.id">
+		<button v-on:click="update()">确定</button>
 	</div>
+	
+	
+	
 	</div>
 </template>
 
@@ -120,7 +134,22 @@ export default {
 				likes:0,
 				text:''
 			},
-			show:'true'
+			show:'true',
+			watch:'true',
+			
+			
+			
+			updateuser:{
+				nickname: '',
+				gender : '',
+				birthday : '',
+				address : '',
+				introduction: '',
+				homepage: '',
+				id: ''
+			}
+			
+			
 		};
 	},
 	created() {
@@ -167,10 +196,27 @@ export default {
 			alert("发布成功")
 			
 		},
+		update(){
+			// let data = {
+			// 	"id": user.id,
+			// 	"nickname": user.nickname,
+			// 	"address": user.address,
+			// 	"birthday":user.birthday,
+			// 	"gender":user.gender,
+			// 	"introduction":user.introduction,
+			// 	"homepage":user.homepage,
+			// };
+			this.updateuser.id = this.user.id;
+			alert(this.user.id)
+			this.axios.put(this.GLOBAL.baseUrl + '/user/update', this.updateuser)
+				.then(res => {
+					this.$router.go(0);
+				});
+				alert("成功")
+		},
 		changeshow(){			
 			this.show=!this.show;
-		},
-
+		},       			
 	},
 	computed: {}
 };

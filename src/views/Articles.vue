@@ -2,7 +2,7 @@
 	<div class="rows">
 		<div class="zh-col-4" v-for="(article, index) in articles" :key="index">
 			<!-- <div class="card zh-shadow flex flex-top-y"> -->
-				<!-- <div class="card-image">
+			<!-- <div class="card-image">
 						<img :src="article.avatar" class="sub-titlee " alt="" />
 						<span @click="toDetail(article.id)" class="card-title pointer">{{ article.title }}</span>
 					</div>
@@ -21,11 +21,26 @@
 							<span>{{ article.comments }}</span>
 					</div> -->
 
-				<div class="middle zh-shadow flex flex-top-y">
-					<div class="wrap">
-						<div class="front middle">
-							<img :src="article.avatar" class="sub-titlee " alt="" />
-							<span class="o" style="color: white;">标题:{{ article.title }}</span>
+			<div class="middle zh-shadow flex flex-top-y">
+				<div class="wrap">
+					<div class="front middle">
+						<img :src="article.avatar" class="sub-titlee " alt="" />
+						<span class="o" style="color: white;">标题:{{ article.title }}</span>
+						<div class="b">
+							<i class="iconfont" style="color: #e53935;">&#xe633;</i>
+							<span class="di" style="color: white;">{{ article.diamond }}</span>
+							<i class="iconfont" style="color: #e53935;">&#xe630;</i>
+							<span class="jian" style="color: white;">{{ article.likes }}</span>
+							<i class="iconfont">&#xe666;</i>
+							<span style="color: white;">{{ article.comments }}</span>
+						</div>
+					</div>
+
+					<div class="back middle">
+						<span @click="toDetail(article.id)" class="card-title pointer border" style="color: whitesmoke; font-size: 18px; font-weight: 700;">阅读更多</span>
+
+						<div class="contact-info">
+							<span style="color: white; margin-top: 50px;">{{ article.content.slice(0, 50) }}...</span>
 							<div class="b">
 								<i class="iconfont" style="color: #e53935;">&#xe633;</i>
 								<span class="di" style="color: white;">{{ article.diamond }}</span>
@@ -35,26 +50,10 @@
 								<span style="color: white;">{{ article.comments }}</span>
 							</div>
 						</div>
-
-						<div class="back middle">
-							<span @click="toDetail(article.id)" class="card-title pointer border" style="color: whitesmoke; font-size: 18px; font-weight: 700;">阅读更多</span>
-							
-							<div class="contact-info">
-								<span style="color: white; margin-top: 50px;">{{ article.content.slice(0, 50) }}...</span>
-								<div class="b">
-									<i class="iconfont" style="color: #e53935;">&#xe633;</i>
-									<span class="di" style="color: white;">{{ article.diamond }}</span>
-									<i class="iconfont" style="color: #e53935;">&#xe630;</i>
-									<span class="jian" style="color: white;">{{ article.likes }}</span>
-									<i class="iconfont">&#xe666;</i>
-									<span style="color: white;">{{ article.comments }}</span>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
-				
-				
+			</div>
+
 			<!-- </div> -->
 		</div>
 	</div>
@@ -69,7 +68,7 @@ export default {
 	},
 
 	created() {
-		this.axios.get('http://localhost:8080/api/article/hot').then(res => {
+		this.axios.get(this.GLOBAL.baseUrl + '/article/hot').then(res => {
 			console.log(res.data.data);
 			this.articles = res.data.data;
 		});
@@ -94,59 +93,58 @@ export default {
 </script>
 
 <style scoped>
-	.middle {
-	  display: flex;
-	  justify-content: center;
-	  align-items: center;
-	  flex-direction: column;
-	}
-	.wrap {
-	  width: 250px;
-	  height: 300px;
-	  position: relative;
-	  padding-bottom: 20px;
-	  margin: 20px;
-	}
-	.front, .back {
-	  width: 100%;
-	  height: 100%;
-	  position: absolute;
-	  background: url(../assets/img/5.jpg);
-	  background-size: cover;
-	  backface-visibility: hidden;
-	  box-shadow: 0 0 10px #2c3e50;
-	  transition: .8s;
-	}
-	.front {
-	  transform: perspective(900px) rotateY(0deg);
-	}
-	.back {
-	  transform: perspective(900px) rotateY(180deg);
-	}
-	.back .contact-info a {
-	  display: inline-flex;
-	  justify-content: center;
-	  align-items: center;
-	  width: 40px;
-	  height: 40px;
-	  font-size: 20px;
-	  text-decoration: none;
-	  color: #2c3e50;
-	  border-radius: 50%;
-	}
-	.back .contact-info a:hover {
-	  color: white;
-	  background-color: #2c3e50;
-	}
-	.wrap:hover .front {
-	  transform: perspective(900px) rotateY(-180deg);
-	}
-	.wrap:hover .back {
-	  transform: perspective(900px) rotateY(00deg);
-	}
-	
-	
-	
+.middle {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+}
+.wrap {
+	width: 250px;
+	height: 300px;
+	position: relative;
+	padding-bottom: 20px;
+	margin: 20px;
+}
+.front,
+.back {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background: url(../assets/img/5.jpg);
+	background-size: cover;
+	backface-visibility: hidden;
+	box-shadow: 0 0 10px #2c3e50;
+	transition: 0.8s;
+}
+.front {
+	transform: perspective(900px) rotateY(0deg);
+}
+.back {
+	transform: perspective(900px) rotateY(180deg);
+}
+.back .contact-info a {
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
+	width: 40px;
+	height: 40px;
+	font-size: 20px;
+	text-decoration: none;
+	color: #2c3e50;
+	border-radius: 50%;
+}
+.back .contact-info a:hover {
+	color: white;
+	background-color: #2c3e50;
+}
+.wrap:hover .front {
+	transform: perspective(900px) rotateY(-180deg);
+}
+.wrap:hover .back {
+	transform: perspective(900px) rotateY(00deg);
+}
+
 .card-image {
 	width: 100%;
 	height: 55%;
@@ -157,10 +155,10 @@ export default {
 	width: 100%;
 	height: 65%;
 }
-.o{
+.o {
 	height: 25%;
 }
-.b{
+.b {
 	height: 10%;
 }
 .rows {

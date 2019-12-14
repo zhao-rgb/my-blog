@@ -27,7 +27,7 @@
 					<div class="tu">
 						<i class="iconfont">&#xe633;</i>
 						<span class="di">{{ article.diamond }}</span>
-						<i class="iconfont">&#xe630;</i>
+						<i class="iconfont" @click="addlike()">&#xe630;</i>
 						<span class="jian">{{ article.likes }}</span>
 						<i class="iconfont" @click="changeshow()">&#xe666;</i>
 						<span>{{ article.comments }}</span>
@@ -36,6 +36,7 @@
 				</div>
 			</div>
 		</div>
+
 		<div class="viewcontainer" v-if="!show">
 			<fieldset>
 				<legend>评论</legend>
@@ -89,6 +90,10 @@ export default {
 				articleId: 0,
 				userId: 0,
 				content: ''
+			},
+			like: {
+				userId: '',
+				articleId: ''
 			},
 			show: 'true'
 		};
@@ -148,6 +153,14 @@ export default {
 		},
 		changeshow() {
 			this.show = !this.show;
+		},
+		addlike() {
+			this.like.userId = this.user.id;
+			this.like.articleId = this.article.id;
+			this.axios.post(this.GLOBAL.baseUrl + '/like', this.like).then(res => {
+				this.$router.go(0);
+			});
+			alert('ok');
 		}
 	},
 	computed: {}

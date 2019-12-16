@@ -209,6 +209,9 @@
 	border-right: 1px solid #ddd;
 	padding-bottom: 10px;
 }
+.border-left{
+	border-left: 4px solid black;
+	}
 /* 边框 */
 .border {
 	border: 1px solid #ddd;

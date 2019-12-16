@@ -18,6 +18,7 @@
 			</div>
 			<div class="zh-containers border">
 				<h3>题:{{ article.title }}</h3>
+				<button class="del" @click="dels(article.id,article.userId)" >删除</button>
 				<div class="box">
 					<img :src="getImages(article.avatar)" class="avatar-xs" @click="toDetail(article.userId)" />
 					<span class="media gutter">{{ article.nickname }}</span>
@@ -27,9 +28,9 @@
 					<div class="tu">
 						<i class="iconfont">&#xe633;</i>
 						<span class="di">{{ article.diamond }}</span>
-						<i class="iconfont" @click="addlike()">&#xe630;</i>
+						<i class="iconfont pointer" @click="addlike()">&#xe630;</i>
 						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont" @click="changeshow()">&#xe666;</i>
+						<i class="iconfont pointer" @click="changeshow()">&#xe666;</i>
 						<span>{{ article.comments }}</span>
 					</div>
 					<div class="card"><p v-html="text"></p></div>
@@ -43,7 +44,7 @@
 				<div class="nav-item border" v-for="(item, index) in comment" :key="index">
 					<div class="card-left ">
 						<img :src="item.author.avatar" class="avatar-xs bian" />
-						<button class="del" @click="del(item.comment.id)">删除</button>
+						<button class="del" @click="del(item.comment.id,item.comment.userId)" >删除</button>
 					</div>
 					<div class="card-right ">
 						<p class="cz-sub-title">{{ item.author.nickname }}</p>
@@ -143,8 +144,13 @@ export default {
 			this.axios.post(this.GLOBAL.baseUrl + '/comment', this.writeComment).then(res => {
 				this.$router.go(0);
 			});
+			alert('评论成功')
 		},
-		del(id) {
+		del(id,id2) {
+			if(id2 !==this.user.id){
+				alert("不能删")
+				return;
+			}
 			alert(id);
 			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete/' + id).then(res => {
 				this.$router.go(0);
@@ -161,7 +167,19 @@ export default {
 				this.$router.go(0);
 			});
 			alert('ok');
+		},
+		dels(id,id1){
+			if(id1 !==this.user.id){
+				alert("不能删")
+				return;
+			}
+			alert(id)
+			this.axios.delete(this.GLOBAL.baseUrl + '/article/delete/' + id).then(res => {
+				this.$router.go(0);
+			});
+			alert('删除成功');
 		}
+	
 	},
 	computed: {}
 };

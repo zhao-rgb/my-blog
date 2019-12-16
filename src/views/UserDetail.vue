@@ -11,7 +11,7 @@
 					<li class="nav-item"><button class="btn btn-lg btn-rd dark-border" @click="search">搜索</button></li>
 				</ul>
 				<div class="changeBox">
-					<img :src="userVo.user.avatar" class="zh-avatar" @click="toUserDetail(user.id)" />
+					<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
 					<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 				</div>
 			</div>
@@ -77,7 +77,7 @@
 	</div>
 	
 	
-<!-- 	<div class="writearticle border" v-if="!show">
+	<div class="writearticle border" v-if="!show">
 		<span style="color: white;">作者ID: {{this.user.id}} </span>			
 		<div class="con">
 			<div class="con-head">
@@ -91,7 +91,7 @@
 				<button @click="changeshow()" v-on:click="release">发布</button>
 			</div>
 		</div>       						
-	</div> -->
+	</div>
 	
 	
 	<div class="update" v-if="!show">
@@ -113,9 +113,6 @@
 <script>
 export default {
 	data() {
-		 // return {
-		 // 	user: JSON.parse(localStorage.getItem('user'))
-		 // };
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			userVo: {
@@ -193,6 +190,7 @@ export default {
 				// alert(res.data.msg);
 				this.$router.go(0);
 			});
+			
 			alert("发布成功")
 			
 		},
@@ -218,7 +216,8 @@ export default {
 			this.show=!this.show;
 		},       			
 	},
-	computed: {}
+	computed: {
+	}
 };
 </script>
 

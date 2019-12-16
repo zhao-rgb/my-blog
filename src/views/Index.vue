@@ -103,10 +103,7 @@ export default {
 <style scoped>
 	.card-tags{
 		margin-left: 60px;
-	}
-	
-	
-	
+	}	
 	#yidong {
 		border: 1px solid white;
 		width: 10px;

@@ -2,7 +2,7 @@
 	<div>
 	<div class="row">
 	<div class="box zh-col-3" v-for="(topic, index) in topics" :key="index">
-	    <img :src="topic.logo" @click="toDetail(topic.id)" />
+	    <img :src="topic.logo"/>
 	    <div class="box-content">
 	        <h3 class="title">专题:{{ topic.topicName }}</h3>
 	        <p class="description">
@@ -80,47 +80,6 @@ export default {
 </script>
 
 <style scoped>
-/* 	.card {
-		width: 90%;
-		height: 300px;
-		background-image: url(../assets/img/topic.png); 
-		background-size: 100%, 100%;
-		margin-bottom: 50px;
-		padding: 20px;
-	}
-	.card-head {
-		height: 30%;
-		padding: 10px;
-		display: flex; 
-		justify-content: center;
-		align-items: center;
-		flex-direction: column;
-	}
-	.card-head img {
-		width: 80px;
-		height: 80px;
-		border-radius: 10px;
-		margin-left: 100px;
-	}
-	.card-body {
-		width: 80%;
-		margin: 0 auto;
-	}
-	.card-body > p {
-		line-height: 30px;
-	}
-	.card a {
-		color: rgb(0, 98, 89);
-		font-weight: 700;
-	}
-	.titles{
-		font-size: 16px;
-		font-weight: 600;
-		color: rgba(0, 0, 0, 0.7);
-		cursor: pointer;
-		margin-left: 90px;
-		margin-top: 20px;
-	} */
 	.row{
 		margin-top: 80px;
 	}
@@ -145,7 +104,7 @@ export default {
 	    transform: scale(0);
 	    transition-delay: 0s;
 	}
-	.box .box-content{
+	.box-content{
 	    width: 100%;
 	    height: 100%;
 	    background: #425770;

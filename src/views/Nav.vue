@@ -8,8 +8,10 @@
 					<li><router-link to="/article">文章</router-link></li>
 					<li><router-link to="/user">作者</router-link></li>
 					<li class="nav-item">
-						<div class="bar1"><input type="text" class="input-box" placeholder="搜索" v-model="keywords" />
-						<button class="btn " @click="search"></button></div>
+						<div class="bar1">
+							<input type="text" class="input-box" placeholder="搜索" v-model="keywords" />
+							<button class="btn " @click="search"></button>
+						</div>
 					</li>
 				</ul>
 				<div class="changeBox">
@@ -29,7 +31,6 @@
 				</transition-group>
 				<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change(index)"></span></div>
 			</div> -->
-		
 
 		<router-view class="zh-container" />
 	</div>
@@ -41,7 +42,6 @@ export default {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			keywords: '',
-
 			slideList: [
 				{
 					url: '#',
@@ -71,7 +71,6 @@ export default {
 			alert('退出');
 			localStorage.clear();
 		},
-
 		go() {
 			this.timer = setInterval(() => {
 				this.autoPlay();
@@ -113,17 +112,14 @@ export default {
 li {
 	margin-right: 100px;
 }
-
 .changeBox {
 	display: flex;
 }
-
 .tui {
 	cursor: pointer;
 	margin-left: 30px;
 	padding-top: 7px;
 }
-
 .nav {
 	width: 100%;
 	height: 30px;
@@ -131,19 +127,16 @@ li {
 	top: 0;
 	z-index: 50;
 }
-
 .carousel-wrap {
 	position: relative;
 	width: 100%;
 	height: 755px;
 	overflow: hidden;
 }
-
 .slide-ul {
 	width: 100%;
 	height: 100%;
 }
-
 .slide-ul li {
 	position: absolute;
 	top: 0;
@@ -151,12 +144,10 @@ li {
 	width: 100%;
 	height: 100%;
 }
-
 .slide-ul li img {
 	width: 100%;
 	height: 100%;
 }
-
 .carousel-items {
 	z-index: 100;
 	position: relative;
@@ -164,7 +155,6 @@ li {
 	text-align: center;
 	font-size: 0;
 }
-
 .carousel-items span {
 	display: inline-block;
 	width: 50px;
@@ -173,50 +163,43 @@ li {
 	background-color: #eee;
 	cursor: pointer;
 }
-
 .carousel-items .active {
 	background-color: #ffa500;
 }
-
 /* 动画 */
 .slide-enter-to {
 	transition: all 1s ease;
 	transform: translateX(0);
 }
-
 .slide-leave-active {
 	transition: all 1s ease;
 	transform: translateX(-100%);
 }
-
 .slide-enter {
 	transform: translateX(100%);
 }
-
 .slide-leave {
 	transform: translateX(0);
 }
-       .bar1 input {
-            border: 2px solid black;
-            border-radius: 5px;
-            background: #F9F0DA;
-            color: #9E9C9C;
-			width: 200px;
-			height: 30px;
-			margin-right: 10px;
-        }
-        .bar1 button {
-             width: 50px;
-			 height: 28px;
-            background: gray;
-            border-radius:5px;
-        }
-        .bar1 button:before {
-            content: "搜索";
-            font-family: FontAwesome;
-            font-size: 16px;
-            color: #F9F0DA;
-        }
-   
-        
+.bar1 input {
+	border: 2px solid black;
+	border-radius: 5px;
+	background: #f9f0da;
+	color: #9e9c9c;
+	width: 200px;
+	height: 30px;
+	margin-right: 10px;
+}
+.bar1 button {
+	width: 50px;
+	height: 28px;
+	background: gray;
+	border-radius: 5px;
+}
+.bar1 button:before {
+	content: '搜索';
+	font-family: FontAwesome;
+	font-size: 16px;
+	color: #f9f0da;
+}
 </style>

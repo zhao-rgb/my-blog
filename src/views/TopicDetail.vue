@@ -70,6 +70,9 @@ export default {
 				let _u = _url.substring(8);
 				return 'https://images.weserv.nl/?url=' + _u;
 			}
+		},
+		toDetail(id) {
+			this.$router.push('/article/detail/' + id);
 		}
 	},
 	computed: {}

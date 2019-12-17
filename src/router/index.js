@@ -16,7 +16,9 @@ import SearchArticle from '@/views/SearchArticle.vue'
 import Basic from '@/views/Basic.vue'
 import Setting from '@/views/Setting.vue'
 import Empty from '@/views/Empty.vue'
-
+import WriteArticle from '@/views/WriteArticle.vue'
+import UpdatePerson from '@/views/UpdatePerson.vue'
+import Person from '@/views/Person.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -38,7 +40,8 @@ const routes = [
 				children: [{
 					path: ':id',
 					component: TopicDetail
-				}]
+				},
+				]
 			},
 			{
 				path: 'article',
@@ -49,34 +52,27 @@ const routes = [
 				}]
 			},
 			{
+					path: 'writearticle',
+					component: WriteArticle
+			},
+			{
+					path: 'updateperson',
+					component: UpdatePerson
+			},
+			{
 				path: 'user',
 				component: Users,
 				children: [{
 						path: ':id',
 						component: UserDetail
-					}],
+					}
+					],
 			},
 			{
 				path: 'user/:id',
-				component: UserDetail
+				component: UserDetail,
+				
 			},
-			// {
-			// 	path: 'user/:id',
-			// 	component: UserDetail,
-			// 	children: [{
-			// 			path: '/',
-			// 			redirect: 'user/:id'
-			// 		},
-			// 		{
-			// 			path: 'basic',
-			// 			component: Basic
-			// 		},
-			// 		{
-			// 			path: 'setting',
-			// 			component: Setting
-			// 		}
-			// 	]
-			// },
 			{
 				path: 'search',
 				component: Search,
@@ -96,7 +92,7 @@ const routes = [
 					{
 						path: 'user',
 						component: SearchUser
-					}
+					}									
 				]
 			},
 			{
@@ -112,7 +108,11 @@ const routes = [
 	},
 	{
 		path: '/user/detail/*',
-		component: UserDetail
+		component: UserDetail,
+	},
+	{
+		path: '/user/person/*',
+		component: Person,
 	},
 	{   
 		path: '/article/detail/*',

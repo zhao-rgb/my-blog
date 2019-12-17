@@ -20,12 +20,11 @@
 							<i class="iconfont">&#xe666;</i>
 							<span>{{ article.comments }}</span>
 					</div> -->
-
 			<div class="middle zh-shadow flex flex-top-y">
 				<div class="wrap">
 					<div class="front middle">
 						<img :src="article.avatar" class="sub-titlee " alt="" />
-						<span class="o" style="color: white;">标题:{{ article.title }}</span>
+						<span class="o border" style="color: white; text-align: center;margin: 30px;padding: 30px; background-color: rgb(40,44,53);">标题:{{ article.title }}</span>
 						<div class="b">
 							<i class="iconfont" style="color: #e53935;">&#xe633;</i>
 							<span class="di" style="color: white;">{{ article.diamond }}</span>
@@ -35,20 +34,10 @@
 							<span style="color: white;">{{ article.comments }}</span>
 						</div>
 					</div>
-
-					<div class="back middle">
-						<span @click="toDetail(article.id)" class="card-title pointer border" style="color: whitesmoke; font-size: 18px; font-weight: 700;">阅读更多</span>
-
+					<div class="back middle">						
 						<div class="contact-info">
-							<span style="color: white; margin-top: 50px;">{{ article.content.slice(0, 50) }}...</span>
-							<div class="b">
-								<i class="iconfont" style="color: #e53935;">&#xe633;</i>
-								<span class="di" style="color: white;">{{ article.diamond }}</span>
-								<i class="iconfont" style="color: #e53935;">&#xe630;</i>
-								<span class="jian" style="color: white;">{{ article.likes }}</span>
-								<i class="iconfont">&#xe666;</i>
-								<span style="color: white;">{{ article.comments }}</span>
-							</div>
+							<span style="color: white; text-align: center;padding: 20px; background-color: rgb(40,44,53); line-height: 30px;">简介:{{ article.content.slice(0, 70) }}...</span>						
+							<span @click="toDetail(article.id)" class="card-title pointer border"><i class="iconfont">&#xe611;</i>阅读更多</span>				
 						</div>
 					</div>
 				</div>
@@ -93,6 +82,11 @@ export default {
 </script>
 
 <style scoped>
+	.card-title{
+	color: whitesmoke;
+	 font-size: 18px; 
+	font-weight: 700;
+	}
 .middle {
 	display: flex;
 	justify-content: center;
@@ -100,8 +94,8 @@ export default {
 	flex-direction: column;
 }
 .wrap {
-	width: 250px;
-	height: 300px;
+	width: 350px;
+	height: 500px;
 	position: relative;
 	padding-bottom: 20px;
 	margin: 20px;
@@ -192,22 +186,6 @@ export default {
 .kk {
 	padding-top: 125px;
 }
-@font-face {
-	font-family: 'iconfont'; /* project id 1434161 */
-	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot');
-	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.svg#iconfont') format('svg');
-}
-
-.iconfont {
-	font-family: 'iconfont' !important;
-	font-size: 16px;
-	font-style: normal;
-	-webkit-font-smoothing: antialiased;
-	-webkit-text-stroke-width: 0.2px;
-	-moz-osx-font-smoothing: grayscale;
-}
 .box {
 	display: flex;
 	justify-content: space-around;
@@ -225,5 +203,14 @@ export default {
 	border-radius: 40px;
 	display: inline-block;
 	text-align: center;
+}
+.contact-info{
+	display: flex;
+	flex-direction: column;	
+	align-items: center;
+	margin: 10px;
+}
+span{
+	margin-bottom: 130px;
 }
 </style>

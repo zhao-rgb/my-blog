@@ -1,23 +1,24 @@
 <template>
-	<div>
+	<div>		
 	<div class="row">
 	<div class="box zh-col-3" v-for="(topic, index) in topics" :key="index">
 	    <img :src="topic.logo"/>
 	    <div class="box-content">
-	        <h3 class="title">专题:{{ topic.topicName }}</h3>
-	        <p class="description">
+	        <h3 class="title border">专题:{{ topic.topicName }}</h3>
+	        <p class="description border">
 	            <p>描述:{{ topic.description }}</p>
-	            <p>{{ topic.articles }}篇文章，{{ topic.follows }}人关注</p>
+	            <p>共{{ topic.articles }}篇文章，有{{ topic.follows }}人关注</p>
 	        </p>
 	        <a class="read pointer" @click="toDetail(topic.id)" >Read More</a>
 	    </div>
-	</div>  
-	 
+	</div>  	 
 	</div>
 	 <div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+	 <div class="sss">
+	 	 <div><a href="#top"><i class="iconfont shadow" style="font-size: 60px; color: red;">&#xe635;</i></a></div>
+	 </div>
 	 </div>
 </template>
-
 <script>
 export default {
 	data() {
@@ -83,6 +84,9 @@ export default {
 	.row{
 		margin-top: 80px;
 	}
+	.title{
+		background-color: gray;
+	}
 	.box{
 	    background: #fff;
 	    box-shadow: 0 0 5px #bababa;
@@ -94,6 +98,7 @@ export default {
 		margin-bottom: 10px;
 		width: 150px;
 		height: 400px;
+		background-color:grey;
 	}
 	.box img{
 	    width: 100%;
@@ -128,15 +133,18 @@ export default {
 	    font-weight: 800;
 	    border-bottom: 1px solid #334a65;
 	    padding-bottom: 10px;
-	    margin-top: 0;
+	    margin-top: 10px;
 	    text-transform: capitalize;
 	}
-	.box .description{
+	 .description{
 	    font-size: 13px;
 	    font-style: italic;
 	    line-height: 20px;
 	    margin-bottom: 30px;
 	}
+	 p{
+		margin-bottom: 30px;
+	}	
 	.box .read{
 		margin-top: 100px;
 	    display: inline-block;

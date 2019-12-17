@@ -3,10 +3,10 @@
 		<div class="zh-nav">
 			<div class="zh-nav-bar zh-fx-between">
 				<ul class="zh-list">
-					<li><router-link to="/index">主页</router-link></li>
-					<li><router-link to="/topic">专题</router-link></li>
-					<li><router-link to="/article">文章</router-link></li>
-					<li><router-link to="/user">作者</router-link></li>
+					<li><router-link to="/index"><i class="iconfont">&#xe616;</i>主页</router-link></li>
+					<li><router-link to="/topic"><i class="iconfont">&#xe634;</i>专题</router-link></li>
+					<li><router-link to="/article"><i class="iconfont">&#xe643;</i>文章</router-link></li>
+					<li><router-link to="/user"><i class="iconfont">&#xe688;</i>作者</router-link></li>
 					<li class="nav-item">
 						<div class="bar1">
 							<input type="text" class="input-box" placeholder="搜索" v-model="keywords" />
@@ -21,17 +21,6 @@
 				</div>
 			</div>
 		</div>
-
-		<!-- 
-			<div class="carousel-wrap">
-				<transition-group tag="ul" class="slide-ul" name="slide">
-					<li v-for="(item, index) in slideList" :key="index" v-show="index === currentIndex" @mouseenter="stop" @mouseleave="go">
-						<a :href="item.url"><img :src="item.image" :alt="item.description" /></a>
-					</li>
-				</transition-group>
-				<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change(index)"></span></div>
-			</div> -->
-
 		<router-view class="zh-container" />
 	</div>
 </template>
@@ -71,24 +60,6 @@ export default {
 			alert('退出');
 			localStorage.clear();
 		},
-		go() {
-			this.timer = setInterval(() => {
-				this.autoPlay();
-			}, 3000);
-		},
-		stop() {
-			clearInterval(this.timer);
-			this.timer = null;
-		},
-		change(index) {
-			this.currentIndex = index;
-		},
-		autoPlay() {
-			this.currentIndex++;
-			if (this.currentIndex > this.slideList.length - 1) {
-				this.currentIndex = 0;
-			}
-		},
 		search() {
 			let currentPath = this.$route.path;
 			if (currentPath != '/search' || currentPath != '/search/article' || currentPath != '/search/topic' || currentPath != '/search/usere') {
@@ -98,7 +69,7 @@ export default {
 			}
 		},
 		toUserDetail(id) {
-			this.$router.push('/user/detail/' + id);
+			this.$router.push('/user/person/' + id);
 		}
 	}
 };
@@ -181,25 +152,5 @@ li {
 .slide-leave {
 	transform: translateX(0);
 }
-.bar1 input {
-	border: 2px solid black;
-	border-radius: 5px;
-	background: #f9f0da;
-	color: #9e9c9c;
-	width: 200px;
-	height: 30px;
-	margin-right: 10px;
-}
-.bar1 button {
-	width: 50px;
-	height: 28px;
-	background: gray;
-	border-radius: 5px;
-}
-.bar1 button:before {
-	content: '搜索';
-	font-family: FontAwesome;
-	font-size: 16px;
-	color: #f9f0da;
-}
+
 </style>

@@ -1,11 +1,5 @@
 <template>
 	<div>
-		<!-- <div class="zh-navv"> -->
-		<!-- <div class="example">
-			<img src="../assets/img/2.jpg">
-			<h1>我不养猫，我只养你</h1>			
-		</div> -->
-		<!-- </div> -->
 		<div class="all" v-if="show">
 			<div class="zh-navs">
 				<div class="zh-nav-bar zh-fx-between">
@@ -17,8 +11,10 @@
 				</div>
 			</div>
 			<div class="zh-containers border">
-				<h3>题:{{ article.title }}</h3>
-				<button class="del" @click="dels(article.id,article.userId)" >删除</button>
+				<div class="hader">
+					<h3>标题:{{ article.title }}</h3>
+					<i class="iconfont" style="color:grey; font-size: 25px;float: right; margin: 20px;" @click="dels(article.id,article.userId)">&#xe612;</i>
+					</div>							
 				<div class="box">
 					<img :src="getImages(article.avatar)" class="avatar-xs" @click="toDetail(article.userId)" />
 					<span class="media gutter">{{ article.nickname }}</span>
@@ -28,7 +24,8 @@
 					<div class="tu">
 						<i class="iconfont">&#xe633;</i>
 						<span class="di">{{ article.diamond }}</span>
-						<i class="iconfont pointer" @click="addlike()">&#xe630;</i>
+						<i class="iconfont pointer" @click="addlike()">&#xe60c;</i>
+						<i class="iconfont pointer" @click="jlike()">&#xe645;</i>
 						<span class="jian">{{ article.likes }}</span>
 						<i class="iconfont pointer" @click="changeshow()">&#xe666;</i>
 						<span>{{ article.comments }}</span>
@@ -82,7 +79,7 @@ export default {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			comment: [],
-
+          
 			articleDetail: null,
 			article: null,
 			text: null,
@@ -142,7 +139,8 @@ export default {
 			this.writeComment.articleId = articlesId;
 			this.writeComment.userId = this.user.id;
 			this.axios.post(this.GLOBAL.baseUrl + '/comment', this.writeComment).then(res => {
-				this.$router.go(0);
+				
+				 this.$router.go(0);
 			});
 			alert('评论成功')
 		},
@@ -161,12 +159,25 @@ export default {
 			this.show = !this.show;
 		},
 		addlike() {
+			// this.p!=this.p;
 			this.like.userId = this.user.id;
 			this.like.articleId = this.article.id;
-			this.axios.post(this.GLOBAL.baseUrl + '/like', this.like).then(res => {
+			this.axios.post(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
+				this.article.likes++;
 				this.$router.go(0);
 			});
+			
 			alert('ok');
+		},
+		jlike(){			
+			this.like.userId = this.user.id;
+			this.like.articleId = this.article.id;
+			alert(this.user.id)
+			this.axios.delete(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
+				console.log(res.data.code)
+				 this.article.likes--;
+				this.$router.go(0);
+			});
 		},
 		dels(id,id1){
 			if(id1 !==this.user.id){
@@ -185,6 +196,9 @@ export default {
 };
 </script>
 <style scoped>
+	.thumb-up {
+					color: #FF0000;
+				}
 .del {
 	width: 50px;
 	height: 25px;
@@ -268,11 +282,13 @@ li {
 	text-align: center;
 }
 @font-face {
-	font-family: 'iconfont'; /* project id 1434161 */
-	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot');
-	src: url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.eot?#iefix') format('embedded-opentype'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff2') format('woff2'),
-		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.woff') format('woff'), url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.ttf') format('truetype'),
-		url('//at.alicdn.com/t/font_1434161_q5oz7ze3vja.svg#iconfont') format('svg');
+  font-family: 'iconfont';  /* project id 1434161 */
+  src: url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.eot');
+  src: url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.eot?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.woff') format('woff'),
+  url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.ttf') format('truetype'),
+  url('//at.alicdn.com/t/font_1434161_kd5b1n3pcwp.svg#iconfont') format('svg');
 }
 .iconfont {
 	font-family: 'iconfont' !important;

@@ -64,11 +64,10 @@
 					return;
 				}			
 				this.writeArticle.userId= this.user.id;
-				//alert(this.user.id);
-				// alert(this.comment.content);
 				this.axios.post(this.GLOBAL.baseUrl + '/article/new', this.writeArticle)
-				.then(res => {					
-					this.$router.go(0);
+				.then(res => {		
+					this.user.articles++;
+					// this.$router.go(0);
 				});				
 				alert("发布成功")				
 			},     			

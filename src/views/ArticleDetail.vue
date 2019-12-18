@@ -139,8 +139,8 @@ export default {
 			this.writeComment.articleId = articlesId;
 			this.writeComment.userId = this.user.id;
 			this.axios.post(this.GLOBAL.baseUrl + '/comment', this.writeComment).then(res => {
-				
-				 this.$router.go(0);
+				this.article.comments++;
+				 // this.$router.go(0);
 			});
 			alert('评论成功')
 		},
@@ -150,33 +150,34 @@ export default {
 				return;
 			}
 			alert(id);
-			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete/' + id).then(res => {
-				this.$router.go(0);
+			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete?id='+id+'&articleId='+this.article.id).then(res => {
+				this.article.comments--;
+				// this.$router.go(0);
 			});
-			alert('删除成功');
+			alert('删除评论成功');
 		},
 		changeshow() {
 			this.show = !this.show;
 		},
 		addlike() {
-			// this.p!=this.p;
-			this.like.userId = this.user.id;
-			this.like.articleId = this.article.id;
+			// this.like.userId = this.user.id;
+			// this.like.articleId = this.article.id;
 			this.axios.post(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
 				this.article.likes++;
-				this.$router.go(0);
+				// this.$router.go(0);
 			});
 			
 			alert('ok');
 		},
 		jlike(){			
-			this.like.userId = this.user.id;
-			this.like.articleId = this.article.id;
-			alert(this.user.id)
 			this.axios.delete(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
-				console.log(res.data.code)
-				 this.article.likes--;
-				this.$router.go(0);
+				console.log(res.data.code)			
+				if(res.data.code == 50004){
+					alert('不能取消关注')
+				}else{
+					this.article.likes--;
+					alert('取消关注成功')
+				}
 			});
 		},
 		dels(id,id1){
@@ -185,10 +186,11 @@ export default {
 				return;
 			}
 			alert(id)
-			this.axios.delete(this.GLOBAL.baseUrl + '/article/delete/' + id).then(res => {
-				this.$router.go(0);
+			this.axios.delete(this.GLOBAL.baseUrl + '/article/delete?id='+id+'&userId='+this.user.id).then(res => {
+				this.user.articles--;
+				// this.$router.go(0);
 			});
-			alert('删除成功');
+			alert('删除文章成功');
 		}
 	
 	},

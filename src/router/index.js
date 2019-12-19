@@ -49,7 +49,8 @@ const routes = [
 				children: [{
 					path: ':id',
 					component: ArticleDetail
-				}]
+				}
+				]
 			},
 			{
 					path: 'writearticle',
@@ -58,7 +59,7 @@ const routes = [
 			{
 					path: 'updateperson',
 					component: UpdatePerson
-			},
+			},			
 			{
 				path: 'user',
 				component: Users,

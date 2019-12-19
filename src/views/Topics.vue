@@ -36,7 +36,7 @@ export default {
 					count: this.count
 				}
 			})
-			.then(res => {
+			.then(res => {		
 				console.log(res.data.data.length);
 				this.topics = res.data.data;
 			});
@@ -85,7 +85,7 @@ export default {
 		margin-top: 80px;
 	}
 	.title{
-		background-color: gray;
+		background-color: gainsboro;
 	}
 	.box{
 	    background: #fff;
@@ -98,7 +98,7 @@ export default {
 		margin-bottom: 10px;
 		width: 150px;
 		height: 400px;
-		background-color:grey;
+		background-color: powderblue;
 	}
 	.box img{
 	    width: 100%;

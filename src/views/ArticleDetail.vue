@@ -1,20 +1,23 @@
 <template>
 	<div>
-		<div class="all" v-if="show">
-			<div class="zh-navs">
+		<div class="all">
+			<!-- <div class="zh-navs">
 				<div class="zh-nav-bar zh-fx-between">
-					<ul class="zh-list">
-						<li><router-link to="/index">主页</router-link></li>
-						<li>发现</li>
-						<li>等你来答</li>
+					<ul>
+						<li><router-link to="/index"><i class="iconfont">&#xe616;</i>主页</router-link></li>					
 					</ul>
+					<div class="changeBox">
+						<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
+						<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
+						<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
+					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="zh-containers border">
 				<div class="hader">
 					<h3>标题:{{ article.title }}</h3>
-					<i class="iconfont" style="color:grey; font-size: 25px;float: right; margin: 20px;" @click="dels(article.id,article.userId)">&#xe612;</i>
-					</div>							
+					<!-- <i class="iconfont" style="color:grey; font-size: 25px;float: right; margin: 20px;" @click="dels(article.id,article.userId)">&#xe612;</i>-->
+					</div>							 
 				<div class="box">
 					<img :src="getImages(article.avatar)" class="avatar-xs" @click="toDetail(article.userId)" />
 					<span class="media gutter">{{ article.nickname }}</span>
@@ -27,50 +30,50 @@
 						<i class="iconfont pointer" @click="addlike()">&#xe60c;</i>
 						<i class="iconfont pointer" @click="jlike()">&#xe645;</i>
 						<span class="jian">{{ article.likes }}</span>
-						<i class="iconfont pointer" @click="changeshow()">&#xe666;</i>
+						<a href="#viewcontainer"><i class="iconfont pointer">&#xe666;</i></a>
 						<span>{{ article.comments }}</span>
 					</div>
 					<div class="card"><p v-html="text"></p></div>
 				</div>
 			</div>
-		</div>
-
-		<div class="viewcontainer" v-if="!show">
-			<fieldset>
-				<legend>评论</legend>
-				<div class="nav-item border" v-for="(item, index) in comment" :key="index">
-					<div class="card-left ">
-						<img :src="item.author.avatar" class="avatar-xs bian" />
-						<button class="del" @click="del(item.comment.id,item.comment.userId)" >删除</button>
+			<div id="viewcontainer">
+				<fieldset>
+					<legend>评论</legend>
+					<div class="border">
+						<textarea
+							rows="10"
+							cols="30"
+							placeholder="发表评论:"
+							v-model="writeComment.content"
+							style="width: 80%;height: 200px;margin-left: 100px;margin-top: 20px;margin-bottom: 20px;"
+						></textarea>
+						<button
+							class="zh-btn-large shadow"
+							@click="release"
+							v-on:click="changeshow()"
+							style="margin-left: 600px;margin-bottom: 20px;width: 200px;height: 40px;background-color: orange;"
+						>
+							发布
+						</button>
 					</div>
-					<div class="card-right ">
-						<p class="cz-sub-title">{{ item.author.nickname }}</p>
-						<p class="border">{{ item.comment.content }}</p>
-						<p class="cz-meta">
-							{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
-							{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
-						</p>
+					<div class="nav-item border" v-for="(item, index) in comment" :key="index">
+						<div class="card-left ">
+							<img :src="item.author.avatar" class="avatar-xs bian" />
+							<button class="del" @click="del(item.comment.id,item.comment.userId)" v-if="item.comment.userId === user.id">删除</button>
+						</div>
+						<div class="card-right ">
+							<p class="cz-sub-title">{{ item.author.nickname }}</p>
+							<p class="border">{{ item.comment.content }}</p>
+							<p class="cz-meta">
+								{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
+								{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
+							</p>
+						</div>
 					</div>
-				</div>
-			</fieldset>
-			<div class="border">
-				<textarea
-					rows="10"
-					cols="30"
-					placeholder="发表评论:"
-					v-model="writeComment.content"
-					style="width: 80%;height: 200px;margin-left: 100px;margin-top: 20px;margin-bottom: 20px;"
-				></textarea>
-				<button
-					class="zh-btn-large shadow"
-					@click="release"
-					v-on:click="changeshow()"
-					style="margin-left: 600px;margin-bottom: 20px;width: 200px;height: 40px;background-color: orange;"
-				>
-					发布
-				</button>
+					<div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+				</fieldset>
 			</div>
-		</div>
+		</div>		
 	</div>
 </template>
 <script>
@@ -79,7 +82,8 @@ export default {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			comment: [],
-          
+            currentPage: 1,
+            count: 3,
 			articleDetail: null,
 			article: null,
 			text: null,
@@ -110,11 +114,17 @@ export default {
 			this.article = this.articleDetail[0];
 			this.text = this.articleDetail[0].text;
 		});
-
-		this.axios.get('http://localhost:8080/api/comment/' + articlesId).then(res => {
-			console.log(res.data.data);
-			this.comment = res.data.data;
-		});
+	    this.axios
+			.get('http://localhost:8080/api/comment/' + articlesId , {
+				params: {
+					page: this.currentPage,
+					count: this.count
+				}
+			})
+			.then(res => {
+				console.log(res.data.data.length);
+				this.comment = res.data.data;
+			});
 	},
 	methods: {
 		// 解决403图片缓存问题
@@ -124,8 +134,30 @@ export default {
 				return 'https://images.weserv.nl/?url=' + _u;
 			}
 		},
+		loadMore() {
+			this.currentPage = this.currentPage + 1;
+			this.axios
+				.get(this.GLOBAL.baseUrl + '/comment/'+ articlesId, {
+					params: {
+						page: this.currentPage,
+						count: this.count
+					}
+				})
+				.then(res => {
+					console.log(res.data.data.length);
+					let temp = [];
+					temp = res.data.data;
+					for (var i = 0; i < temp.length; i++) {
+						this.users.splice(this.currentPage * this.count, 0, temp[i]);
+					}
+					console.log(this.users.length);
+				});
+		},
 		toDetail(id) {
 			this.$router.push('/user/detail/' + id);
+		},
+		toUserDetail(id) {
+			this.$router.push('/user/person/' + id);
 		},
 		//发评论
 		release() {
@@ -140,7 +172,6 @@ export default {
 			this.writeComment.userId = this.user.id;
 			this.axios.post(this.GLOBAL.baseUrl + '/comment', this.writeComment).then(res => {
 				this.article.comments++;
-				 // this.$router.go(0);
 			});
 			alert('评论成功')
 		},
@@ -163,11 +194,15 @@ export default {
 			// this.like.userId = this.user.id;
 			// this.like.articleId = this.article.id;
 			this.axios.post(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
-				this.article.likes++;
+				console.log(res.data.code)
+				if(res.data.code == 50004){
+					alert('已关注')
+				}else{
+				   this.article.likes++;
+				   alert('关注成功');
 				// this.$router.go(0);
-			});
-			
-			alert('ok');
+				}
+			});		
 		},
 		jlike(){			
 			this.axios.delete(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
@@ -198,9 +233,6 @@ export default {
 };
 </script>
 <style scoped>
-	.thumb-up {
-					color: #FF0000;
-				}
 .del {
 	width: 50px;
 	height: 25px;
@@ -240,26 +272,27 @@ export default {
 h3 {
 	text-align: center;
 }
-.zh-navs {
+/* .zh-navs {
 	height: 70px;
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
-	z-index: 999;
-	background-color: rgba(7, 84, 154);
+	z-index: 999;	
+	background-color: wheat;
 	cursor: pointer;
-}
+} */
 li {
 	margin-left: 60px;
 }
 .all {
-	background-image: url(../assets/img/top.jpg);
-	background-size: calc(100%);
+	width: 100%;
+	margin: auto;
+	background-color: white;
 }
 .box {
 	height: 50px;
-	line-height: 50px;
+	line-height: 0px;
 	text-align: center;
 }
 .container-b {
@@ -270,7 +303,7 @@ li {
 .zh-containers {
 	width: 80%;
 	margin: auto;
-	margin-top: 70px;
+	margin-top: 0px;
 	/* background-color: rgba(234, 234, 234); */
 }
 .di {

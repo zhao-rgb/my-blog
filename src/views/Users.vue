@@ -2,8 +2,8 @@
 	
 	<div class="container">
 	    <div class="row">
-	        <div class="zh-col-4 " v-for="(user, index) in users" :key="index">
-	            <div class="our-team">
+	        <div class="zh-col-3" v-for="(user, index) in users" :key="index">
+	            <div class="our-team border zh-shadow">
 	                <div class="pic">
 	                    <p class="description">个人简介:{{user.introduction}}</p>
 	                    <img :src="user.avatar" />
@@ -34,7 +34,7 @@ export default {
 		return {
 			users: [],
 			currentPage: 1,
-			count: 6
+			count: 8
 		};
 	},
 	created() {
@@ -45,7 +45,7 @@ export default {
 					count: this.count
 				}
 			})
-			.then(res => {
+			.then(res => {			
 				console.log(res.data.data.length);
 				this.users = res.data.data;
 			});
@@ -97,7 +97,7 @@ export default {
  .our-team{
      padding-bottom: 20px;
      text-align: center;
-	 background-color: wheat;
+	 background-color: powderblue;
 	  margin: 10px;
  }
  .our-team .pic{
@@ -105,7 +105,7 @@ export default {
      width: 200px;
      height: 200px;
      border-radius: 50%;
-     background: gray;
+     background: rgb(40,44,53);
      padding: 70px 20px 30px;
      margin-bottom: 20px;
      position: relative;

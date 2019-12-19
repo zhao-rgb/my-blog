@@ -3,11 +3,14 @@
 		<div class="zh-container border row lab">
 			<div class="zh-navs">
 				<div class="zh-nav-bar zh-fx-between">
-					<ul class="zh-list">
-						<li><router-link to="/index">主页</router-link></li>
-						<li>发现</li>
-						<li>等你来答</li>
+					<ul>
+						<li><router-link to="/index"><i class="iconfont">&#xe616;</i>主页</router-link></li>					
 					</ul>
+					<div class="changeBox">
+						<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
+						<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
+						<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
+					</div>
 				</div>
 			</div>
 
@@ -25,6 +28,7 @@
 					<i class="iconfont">&#xe60e;</i>
 					<span>举报</span>
 				</div>
+				<h3>文章:</h3>
 				<div class=" love zh-col-12 " v-for="(item, index) in topicVo.articleList" :key="index">
 					<div class="zh-media-wraaper shadow">
 						<div class="zh-media-left"><img :src="getImages(item.cover)" class="thumnail-xs" /></div>
@@ -48,6 +52,7 @@
 export default {
 	data() {
 		return {
+			user: JSON.parse(localStorage.getItem('user')),
 			topicVo: {}
 		};
 	},
@@ -73,6 +78,9 @@ export default {
 		},
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
+		},
+		toUserDetail(id) {
+			this.$router.push('/user/person/' + id);
 		}
 	},
 	computed: {}
@@ -81,7 +89,6 @@ export default {
 
 <style scoped>
 .all {
-	background-image: url(../assets/img/top.jpg);
 	background-size: calc(100%);
 }
 .borders {
@@ -108,7 +115,7 @@ export default {
 	left: 0;
 	right: 0;
 	z-index: 999;
-	background-color: rgba(7, 84, 154);
+	background-color: rgba(240,231,198);
 	cursor: pointer;
 }
 li {

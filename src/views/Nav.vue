@@ -77,7 +77,6 @@ export default {
 
 <style scoped>
 .all {
-	background-image: url('https://i0.hippopx.com/photos/811/608/908/minimalistic-tree-lifts-fog-preview.jpg');
 	background-size: calc(100%);
 }
 li {

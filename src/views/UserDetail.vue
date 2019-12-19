@@ -1,22 +1,28 @@
 <template>
 	<div>
 	<div class="all">
-		<div class="zh-navs">
-			<div class="zh-nav-bar zh-fx-between">
-				<ul class="zh-list">
-					<li><router-link to="/index">主页</router-link></li>
-					<li>发现</li>
-					<li>等你来答</li>
-					<li class="nav-item"><input type="text" class="input-box" placeholder="搜索" v-model="keywords" /></li>
-					<li class="nav-item"><button class="btn btn-lg btn-rd dark-border" @click="search">搜索</button></li>
-				</ul>
-				<div class="changeBox">
-					<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
-					<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
-				</div>
+	<div class="zh-nav">
+		<div class="zh-nav-bar zh-fx-between">
+			<ul class="zh-list">
+				<li><router-link to="/index"><i class="iconfont">&#xe616;</i>主页</router-link></li>
+				<li><router-link to="/topic"><i class="iconfont">&#xe634;</i>专题</router-link></li>
+				<li><router-link to="/article"><i class="iconfont">&#xe643;</i>文章</router-link></li>
+				<li><router-link to="/user"><i class="iconfont">&#xe688;</i>作者</router-link></li>
+				<li class="nav-item">
+					<div class="bar1">
+						<input type="text" class="input-box" placeholder="搜索" v-model="keywords" />
+						<button class="btn " @click="search"></button>
+					</div>
+				</li>
+			</ul>
+			<div class="changeBox">
+				<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
+				<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
+				<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 			</div>
 		</div>
-		<div class="zh-containers " >
+	</div>
+		<div class="zh-containers" >
 			<div class="row">
 				<div class="zh-col-4 ">
 					<div class="ku ">
@@ -26,7 +32,7 @@
 							<p class="meta">注册时间:{{ userVo.user.createTime.date.year }}年{{ userVo.user.createTime.date.month }}月{{ userVo.user.createTime.date.day }}日</p>
 							<p class="sub-title">简介:{{ userVo.user.introduction.slice(0, 50) }}...</p>
 							<p class="sub-title">性别:{{ userVo.user.gender}}</p>
-							<hr />
+							<hr/>
 						</div>
 						<div class="second">
 							<ul class="zh-list">
@@ -112,6 +118,9 @@ export default {
 		},
 		toDetail(id) {
 			this.$router.push('/article/detail/' + id);
+		},
+		toUserDetail(id) {
+			this.$router.push('/user/person/' + id);
 		}
 		}
 };
@@ -196,12 +205,13 @@ li {
 }
 .zh-containers {
 	width: 80%;
+	height: 100%;
 	margin: auto;
 	margin-top: 100px;
 }
 .nav-item {
 	height: 70px;
-	line-height: 70px;
+	line-height: 50px;
 }
 /* 下边框 */
 .border-bottom {

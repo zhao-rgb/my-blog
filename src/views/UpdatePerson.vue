@@ -1,37 +1,37 @@
 <template>
 	<div class="container">
+		<div class="a">
 		<fieldset> 		
 		 	 	<legend>个人资料</legend> 
-		<div class="update">
-			<div>
+		<div class="update" style="margin: 20px;">
+			<div style="margin: 20px;">
 				<p>头像:</p>
 				<img :src="this.user.avatar" style="width: 100px;height: 100px;"/>
 			</div>
 			<div>
-				 <label>ID:</label>
-				 <input  class="id" type="number" placeholder="id" v-model="user.id" value="user.id" > 
+				<h3 style="color: black;">作者ID: {{this.user.id}} </h3>	
 			</div>	
 			<div>
-				<label>昵称</label>
-				<input type="text" placeholder="昵称" v-model="updateuser.nickname">
+				<h3>{{updateuser.nickname}}</h3>
+				<input type="text" v-model="updateuser.nickname">
 			</div>
-			<div class="xb">			
-					<label>性别:</label>
-					<input class="sex" type="radio"  value="男" checked="checked"  v-model="updateuser.gender"/>男
-					<input class="sex" type="radio" value="女" v-model="updateuser.gender"/>女				
-			</div>
+			<div class="xb">	
+					<h3>性别:</h3>					
+					<div><input  type="radio"  value="男" checked="checked"  v-model="updateuser.gender"/><p>男</p></div>					
+					<div><input  type="radio" value="女" v-model="updateuser.gender"/><p>女</p></div>							
+			</div> 
 			<div>
-				<label>生日:</label>
+				<h3>生日:</h3>
 				<input  class="date" type="date"  v-model="updateuser.birthday">
 			</div>
 			<div class="address"> 
-			    <label >所在地址:</label>
-				 	 	<select id="province-select" hidefocus="true" v-model="updateuser.address">  
+			    <h3>所在地址:</h3>
+				 	 	<select class="province-select" hidefocus="true" v-model="updateuser.address" >  
 				 	 	 	 <option value="北京">北京</option> 
 				 	 	 	 <option value="天津">天津</option> 
 				 	  	     <option value="河北">河北</option> 				 	 	 	       
 				 	 	     <option value="上海">上海</option> 
-				 	 	 	 <option value="江苏">江苏</option> 
+				 	 	 	 <option value="江苏" selected="selected">江苏</option> 
 				 	         <option value="浙江">浙江</option> 				 
 				 	 	 	 <option value="安徽">安徽</option> 
 				 	         <option value="新疆">新疆</option> 				 	 	 	      
@@ -43,16 +43,15 @@
 				 	       </select> 				 	   
 			</div>			
 			<div>
-				 <label >简介:</label>	
-				<input type="text" placeholder="您的简介" v-model="updateuser.introduction">
+				<input type="text" placeholder="您的简介:" v-model="updateuser.introduction">
 			</div>
 			<div>
-				 <label >主页:</label>
-				<input type="text" placeholder="主页" v-model="updateuser.homepage">
+				<input type="text" placeholder="您的主页地址:" v-model="updateuser.homepage">
 			</div>	
 			<button class="ok" v-on:click="update()">确定</button>
 		</div>
 		</fieldset> 
+		</div>
 	</div>		
 </template>
 
@@ -99,8 +98,12 @@
 </script>
 
 <style>
+	.a{
+		margin: 30px;
+	}
 	.container{
-		width: 80%;
+		width: 100%;
+		height: 100%;
 		align-items: center;
 	}
 	.update input{
@@ -108,10 +111,18 @@
 		flex-direction: row;
 		width: 300px;
 		height: 40px;
+		margin-top: 20px;
 	}
-	.id{
-		width: 40px;
-		height: 20px;
+	.xb{
+		display: flex;
+	}
+	.xb input{
+		width: 20px;
+		margin-right: 10px;
+	}
+	.province-select{
+		width: 80px;
+		height: 30px;
 	}
 	.sex{
 		width: 20px;
@@ -119,6 +130,11 @@
 	}
 	.date{
 		width: 200px;
+		height: 30px;
+	}
+	.ok{
+		margin: 20px;
+		width: 60px;
 		height: 30px;
 	}
 </style>

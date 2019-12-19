@@ -1,6 +1,6 @@
-<template>
-			
+<template>		
 				<div class="writearticle border" >
+					<div class="c">
 					<span style="color: white;">作者ID: {{this.user.id}} </span>			
 					<div class="con">
 						<div class="con-head">
@@ -13,9 +13,9 @@
 							<textarea rows="10" cols="30" placeholder="内容:" v-model="writeArticle.text"></textarea>
 							<button  v-on:click="release">发布</button>
 						</div>
-					</div>       						
-				</div>
-					
+					</div>   
+												</div>
+				</div>					
 </template>
 
 <script>
@@ -79,6 +79,10 @@
 			background-image: url(../assets/img/4.jpg);		
 			width: 100%;
 			height: 800px;
+		}
+		.c{
+			margin-top: 40px;
+			margin-left: 400px;
 		}
 		.con .con-head{
 			display: flex;

@@ -167,14 +167,17 @@ export default {
 				data: formData,
 				processData: false,
 				contentType: false
-			}).then(function(uploadFileRes) {
-				console.log(uploadFileRes.data.data);
+			}).then(uploadFileRes=> {
+				console.log(uploadFileRes.data.data)
 				_this.avatar = uploadFileRes.data.data;
+				this.updateAvatar(_this.avatar);
 			});
 			//调用修改头像的方法
-			this.updateAvatar();
+			
 		},
-		updateAvatar: function() {
+		updateAvatar: function(avatar) {
+			var _this = this
+			console.log(avatar)
 			this.$http({
 				method: 'put',
 				url: this.GLOBAL.baseUrl + '/updateA',
@@ -183,10 +186,10 @@ export default {
 				},
 				params: {
 					mobile: this.user.mobile,
-					avatar: this.avatar
+					avatar: avatar
 				}
 			}).then(res => {
-				 console.log(res.data.code);
+				  console.log(res.data.code);
 			});
 		}
 		

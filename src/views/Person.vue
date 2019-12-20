@@ -19,7 +19,7 @@
 					</ul>
 					<div class="changeBox">
 						<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
-						<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
+						<img :src="avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
 						<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 					</div>
 				</div>
@@ -30,8 +30,8 @@
 						<div class="ku">
 							<div class="first">
 								<div class="left">
-									<img :src="avatar" @click="handleClick()" v-if="userVo.user.id === this.user.id"/>
-									<img :src="avatar" v-else />
+									<img :src="avatar" class="zh-avatars" @click="handleClick()" v-if="userVo.user.id === this.user.id"/>
+									<img :src="avatar" class="zh-avatars" v-else />
 									<input type="file" @change="changeAvatar($event)" style="display: none;" id="fileBox" />
 								</div>
 								<div class="right">

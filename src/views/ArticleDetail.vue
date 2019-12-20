@@ -183,7 +183,6 @@ export default {
 			alert(id);
 			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete?id='+id+'&articleId='+this.article.id).then(res => {
 				this.article.comments--;
-				// this.$router.go(0);
 			});
 			alert('删除评论成功');
 		},
@@ -200,7 +199,6 @@ export default {
 				}else{
 				   this.article.likes++;
 				   alert('关注成功');
-				// this.$router.go(0);
 				}
 			});		
 		},
@@ -208,7 +206,7 @@ export default {
 			this.axios.delete(this.GLOBAL.baseUrl + '/like?userId='+this.user.id+'&articleId='+this.article.id).then(res => {
 				console.log(res.data.code)			
 				if(res.data.code == 50004){
-					alert('不能取消关注')
+					alert('已经取消关注了')
 				}else{
 					this.article.likes--;
 					alert('取消关注成功')
@@ -223,7 +221,6 @@ export default {
 			alert(id)
 			this.axios.delete(this.GLOBAL.baseUrl + '/article/delete?id='+id+'&userId='+this.user.id).then(res => {
 				this.user.articles--;
-				// this.$router.go(0);
 			});
 			alert('删除文章成功');
 		}

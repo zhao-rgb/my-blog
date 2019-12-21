@@ -114,9 +114,13 @@ export default {
 			this.article = this.articleDetail[0];
 			this.text = this.articleDetail[0].text;
 		});
+		var query = window.location.href;
+		var begin = query.lastIndexOf('/') + 1;
+		var articlesId = query.substring(begin);
 	    this.axios
-			.get('http://localhost:8080/api/comment/' + articlesId , {
+			.get('http://localhost:8080/api/comment',{
 				params: {
+					id: articlesId,
 					page: this.currentPage,
 					count: this.count
 				}
@@ -136,9 +140,13 @@ export default {
 		},
 		loadMore() {
 			this.currentPage = this.currentPage + 1;
+			var query = window.location.href;
+			var begin = query.lastIndexOf('/') + 1;
+			var articlesId = query.substring(begin);
 			this.axios
-				.get(this.GLOBAL.baseUrl + '/comment/'+ articlesId, {
+				.get(this.GLOBAL.baseUrl + '/comment',{
 					params: {
+						id: articlesId,
 						page: this.currentPage,
 						count: this.count
 					}
@@ -148,10 +156,17 @@ export default {
 					let temp = [];
 					temp = res.data.data;
 					for (var i = 0; i < temp.length; i++) {
-						this.users.splice(this.currentPage * this.count, 0, temp[i]);
+						this.comment.splice(this.currentPage * this.count, 0, temp[i]);
 					}
-					console.log(this.users.length);
+					 console.log(this.comment.length);
+					 if(res.data.data.length == 0){
+						 alert('我们是有底线哒！！！')
+					 }
+					
 				});
+		},
+		go(page) {
+			window.location.href = page;
 		},
 		toDetail(id) {
 			this.$router.push('/user/detail/' + id);

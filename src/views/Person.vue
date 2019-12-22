@@ -94,6 +94,20 @@
 									</div>
 								</div>
 							</div>
+							
+							<h3>我点赞过的文章:</h3>
+							<div class="border zh-col-4" v-for="(item, index) in likeVo" :key="index">
+															<div class="mywrite shadow border">
+																<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
+																<div class="zh-media-middle">
+																	<p class="title">标题:{{ item.article.title }}</p>
+																
+																</div>
+																
+															</div>
+														</div>
+							
+							
 						</div>
 					</div>
 				</div>
@@ -111,6 +125,10 @@ export default {
 				user: {},
 				articleList: {}
 			},
+			likeVo: {
+				article:{},
+				like:{}
+			},
 			avatar: '',
 			show: true
 		};
@@ -125,6 +143,11 @@ export default {
 			console.log(res.data.data);
 			this.userVo = res.data.data;
 			this.avatar = this.userVo.user.avatar;
+		});
+		
+		this.axios.get(this.GLOBAL.baseUrl + '/like?userId=' + usersId).then(res => {
+			console.log(res.data.data);
+			this.likeVo = res.data.data;
 		});
 	},
 	methods: {

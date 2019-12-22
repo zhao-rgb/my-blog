@@ -12,8 +12,8 @@
 				<h3 style="color: black;">作者ID: {{this.user.id}} </h3>	
 			</div>	
 			<div>
-				<h3>{{updateuser.nickname}}</h3>
-				<input type="text" v-model="updateuser.nickname">
+				
+				<input type="text" placeholder="您的昵称:" v-model="updateuser.nickname">
 			</div>
 			<div class="xb">	
 					<h3>性别:</h3>					
@@ -26,7 +26,7 @@
 			</div>
 			<div class="address"> 
 			    <h3>所在地址:</h3>
-				 	 	<select class="province-select" hidefocus="true" v-model="updateuser.address" >  
+				 	 	<select class="province-select" hidefocus="true" v-model="updateuser.address">  
 				 	 	 	 <option value="北京">北京</option> 
 				 	 	 	 <option value="天津">天津</option> 
 				 	  	     <option value="河北">河北</option> 				 	 	 	       

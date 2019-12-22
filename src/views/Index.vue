@@ -192,16 +192,6 @@ export default {
 		toDetailuser(id) {
 			this.$router.push('/user/detail/' + id);
 		},
-		 backTop () {
-					      const that = this
-					      let timer = setInterval(() => {
-					        let ispeed = Math.floor(-that.scrollTop / 5)
-					        document.documentElement.scrollTop = document.body.scrollTop = that.scrollTop + ispeed
-					        if (that.scrollTop === 0) {
-					          clearInterval(timer)
-					        }
-					      }, 16)
-					  }
 					  
 	},
 	computed: {

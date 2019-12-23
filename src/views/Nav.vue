@@ -16,7 +16,7 @@
 				</ul>
 				<div class="changeBox">
 					<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
-					<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
+					<img :src="avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
 					<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
 				</div>
 			</div>
@@ -24,13 +24,13 @@
 		<router-view class="zh-container" />
 	</div>
 </template>
-
 <script>
 export default {
 	data() {
 		return {
 			user: JSON.parse(localStorage.getItem('user')),
 			keywords: '',
+			avatar: '',
 			slideList: [
 				{
 					url: '#',
@@ -52,7 +52,13 @@ export default {
 			timer: null
 		};
 	},
-	created() {},
+	created() {
+		this.axios.get(this.GLOBAL.baseUrl + '/detail/' + this.user.id).then(res => {
+			console.log(res.data.data);
+			this.userVo = res.data.data;
+			this.avatar = this.userVo.user.avatar;
+		});
+	},
 	methods: {
 		logout() {
 			this.user = null;
@@ -76,9 +82,7 @@ export default {
 </script>
 
 <style scoped>
-.all {
-	background-size: calc(100%);
-}
+
 li {
 	margin-right: 100px;
 }

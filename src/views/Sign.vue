@@ -23,8 +23,7 @@
 				<input type="password" placeholder="请确认密码" minlength="6" maxlength="16" v-model="pwd2" />
 				
 				<input
-					
-					type="tel"
+						type="tel"
 					placeholder="请绑定手机号"
 					minlength="11"
 					maxlength="11"
@@ -49,16 +48,14 @@
 				<i class="iconfont" style="color: rgb(24, 172, 252)">&#xe626;</i>
 				<i class="iconfont" style="color: rgb(103, 204, 121)">&#xe6c3;</i>
 			</div>
-
-			<div>
+		<!-- 	<div>
 				<div class="message" v-if="pop">
 					<h1>{{ info }}</h1>
 				</div>
-
 				<div class="msg-box" v-if="popPlus">
 					<p>{{ info }}</p>
 				</div>
-			</div>
+			</div> -->
 		</div>
 
 		<router-link to="/" class="back">返回</router-link>
@@ -73,7 +70,7 @@ export default {
 				mobile: '',
 				password: '',
 				code: ''
-			},
+			},		
 			codeDisabled: true,		
 			info: '',
 			isActive: true,
@@ -85,7 +82,6 @@ export default {
 			token: ''
 		};
 	},
-
 	created() {
 		this.axios.get(this.GLOBAL.baseUrl + '/code', { responseType: 'blob' }).then(res => {
 			var img = this.$refs.codeImg;
@@ -97,7 +93,6 @@ export default {
 			console.log(this.token);
 		});
 	},
-
 	methods: {
 		// signIn(userDto) {
 		// 	this.axios.post('http://localhost:8080/api/sign-in', JSON.stringify(this.userDto)).then(response => {
@@ -112,7 +107,6 @@ export default {
 		// 		}
 		// 	});
 		// },
-
 		signIn(userDto) {
 			this.axios({
 				method: 'post',
@@ -133,7 +127,6 @@ export default {
 				}
 			});
 		},
-
 		refresh() {
 			this.axios.get(this.GLOBAL.baseUrl + '/code', { responseType: 'blob' }).then(res => {
 				console.log(res);
@@ -146,7 +139,6 @@ export default {
 			this.isActive = !this.isActive;
 			this.selected = this.selected == 0 ? 1 : 0;
 		},
-
 		checkLength() {
 			if (Number(this.userDto.mobile) && this.userDto.mobile.length == 11) {
 				this.codeDisabled = false;
@@ -155,7 +147,6 @@ export default {
 				return false;
 			}
 		},
-
 		clear() {
 			// alert("我进入到了clear()方法中");
 			this.userDto.nickname = '';
@@ -164,26 +155,27 @@ export default {
 			this.pwd2 = '';
 			this.status = '';
 			this.codeDisabled = true;
-		},
-
-		register(userDto) {
-			if (this.userDto.nickname == '') {
-				this.info = '用户名不能为空';
-				this.showMsg();
+		},	
+		register(userDto) {		
+			if (this.userDto.nickname == '' ) {
+				alert('用户名不能为空');
 				return;
 			}
-			if (this.userDto.password == '' || this.pwd2 == '') {
-				this.info = '密码不能为空';
-				this.showMsg();
+			if (this.userDto.password == '' || this.pwd2 == '') {				
+				alert('密码不能为空');
+				return;
+			}
+			if (this.userDto.password  != this.pwd2 ) {
+				alert('两次密码不一样');
 				return;
 			}
 			if (this.userDto.mobile == '') {
-				this.info = '手机号不能为空';
-				this.showMsg();
+				
+				alert('手机号不能为空');
 				return;
 			}
-			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {
-				this.info = '手机号码格式错误';
+			if (!/^1[34578]\d{9}$/.test(this.userDto.mobile)) {			
+				alert('手机号码格式错误');
 				this.userDto.mobile = '';
 				return;
 			}
@@ -193,8 +185,7 @@ export default {
 					alert('注册成功');
 					// 将后台的用户信息存入本地存储
 					localStorage.user = JSON.stringify(response.data.data);
-					// 路由跳转
-					this.$router.push('/');
+					// 路由跳转				
 				}
 			});
 			this.axios({
@@ -207,8 +198,7 @@ export default {
 			}).then(res => {
 				if (res.data.msg === '注册成功') {
 					alert('注册成功');
-					localStorage.setItem('user', JSON.stringify(res.data.data));
-					this.$router.push('/');
+					localStorage.setItem('user', JSON.stringify(res.data.data));			
 				} 
 			});
 		}
@@ -218,12 +208,11 @@ export default {
 
 <style scoped>
 .back {
-	position: absolute;
-	top: 1%;
-	right: 1%;
-	background-color: #008000;
-}
-
+		color: black;
+		position: absolute;
+		top: 1%;
+		left: 1%;
+	}
 .full {
 	position: absolute;
 	top: 0;
@@ -233,7 +222,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	background-image: url('https://i0.hippopx.com/photos/179/171/625/sparkler-holding-hands-firework-preview.jpg');
+	background-color: rgb(241,248,233);
 	/* 图片全屏 */
 	background-size: calc(100%);
 }
@@ -253,7 +242,6 @@ export default {
 	-webkit-text-stroke-width: 0.2px;
 	-moz-osx-font-smoothing: grayscale;
 }
-
 .login-box {
 	background-color: #ffffff;
 	width: 400px;
@@ -262,6 +250,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
+	position: relative;
 }
 /* 顶部div */
 .tab {
@@ -282,9 +271,9 @@ export default {
 	line-height: 38px;
 }
 .active {
-	color: #00bbdd;
+	color: rgb(165,214,167);
 	font-weight: 600;
-	border-bottom: 2px solid #00bbdd;
+	border-bottom: 2px solid rgb(165,214,167);
 }
 /* 中间div */
 .tab-box {
@@ -313,13 +302,15 @@ input {
 /* 登录和注册按钮 */
 .regist-btn,
 .login-btn {
-	background-color: rgb(30, 136, 229);
+	background-color: rgb(165,214,167);
 	cursor: pointer;
+	width: 200px;
+	margin-top: 20px;
 }
 .regist-btn:hover,
 .login-btn:hover {
 	cursor: pointer;
-	background-color: rgb(66, 165, 245);
+	background-color: rgb(165,214,167);
 }
 /* 没有账号的情况 */
 .span-tab {
@@ -377,39 +368,6 @@ input {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
-}
-
-/* （遮罩层）提示框 */
-.message {
-	background-color: rgb(255, 253, 244);
-	opacity: 0.7;
-	width: 280px;
-	height: 10%;
-	border-radius: 10px;
-	margin: 0 auto;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-family: '楷体';
-}
-
-.msg-box {
-	position: absolute;
-	top: 30%;
-	left: 30%;
-	width: 350px;
-	background-color: #f0f8ff;
-	padding: 10px;
-	border-radius: 10px;
-	display: flex;
-	align-items: center;
-}
-
-p {
-	text-indent: 2em;
-	font-family: '楷体';
-	font-size: 30px;
-	font-weight: 300;
 }
 .code-box {
 	display: flex;

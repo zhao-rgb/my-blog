@@ -1,5 +1,4 @@
 <template>
-	<div>
 	<div class="all">
 	<div class="zh-nav">
 		<div class="zh-nav-bar zh-fx-between">
@@ -60,17 +59,18 @@
 				<div class="zh-col-8 border-left">
 					<div class="row">
 						<div class="banner flex zh-flex-center zh-col-12">
-							<img src="https://i0.hippopx.com/photos/170/829/152/summerfield-woman-girl-sunset-thumb.jpg" class="cover" />
-							<div class="lab zh-col-12 border shadow"></div>
+							<img src="https://i0.hippopx.com/photos/367/415/619/paper-romance-symbol-valentine-thumb.jpg" class="cover" />
+				            <h3>他的文章:</h3>
 						</div>
-						<div class=" love zh-col-12 " v-for="(item, index) in userVo.articleList" :key="index">
-							<div class="zh-media-wraaper shadow">
+						<div class=" zh-col-12 " v-for="(item, index) in userVo.articleList" :key="index">
+							<div class="zh-media-wraaper  bordert">
 								<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
 								<div class="zh-media-middle">
-									<p class="title" @click="toDetail(item.article.id)">{{ item.article.title }}</p>
-									<hr />
-									<p class="sub-title">{{ item.article.content }}</p>
-								</div>
+									<p class="title">标题:{{ item.article.title }}</p>
+									<hr/>
+									<p class="sub-title">{{ item.article.content.slice(0, 50)}}....</p>	
+									<span @click="toDetail(item.article.id)"  style="font-weight: 600; cursor: pointer;" ><i class="iconfont">&#xe611;</i>阅读更多</span>
+								</div>					
 							</div>
 						</div>
 					</div>
@@ -78,7 +78,6 @@
 			</div>
 		</div> 
 	</div>	
-	</div>
 </template>
 
 <script>
@@ -127,10 +126,13 @@ export default {
 </script>
 
 <style scoped>
-.all {
-	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
-	background-size: calc(100%);
-}
+	.zh-media-wraaper span{
+		position: absolute;
+		bottom: 10%;
+	}
+	.sub-title{
+		margin-bottom: 80px;
+	}
 .banner {
 	width: 100%;
 	height: 200px;
@@ -205,9 +207,9 @@ li {
 }
 .zh-containers {
 	width: 80%;
-	height: 100%;
+	height:100%;
 	margin: auto;
-	margin-top: 100px;
+	margin-top: 120px;
 }
 .nav-item {
 	height: 70px;

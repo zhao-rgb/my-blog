@@ -1,13 +1,10 @@
 <template>
-	<div class="container">
+	<div class="container-u">		
 		<div class="a">
 		<fieldset> 		
-		 	 	<legend>个人资料</legend> 
-		<div class="update" style="margin: 20px;">
-			<div style="margin: 20px;">
-				<p>头像:</p>
-				<img :src="this.user.avatar" style="width: 100px;height: 100px;"/>
-			</div>
+		 	 	<legend>个人资料</legend>         
+		<div class="update border">
+			<div class="c">		
 			<div>
 				<h3 style="color: black;">作者ID: {{this.user.id}} </h3>	
 			</div>	
@@ -31,7 +28,7 @@
 				 	 	 	 <option value="天津">天津</option> 
 				 	  	     <option value="河北">河北</option> 				 	 	 	       
 				 	 	     <option value="上海">上海</option> 
-				 	 	 	 <option value="江苏" selected="selected">江苏</option> 
+				 	 	 	 <option value="江苏">江苏</option> 
 				 	         <option value="浙江">浙江</option> 				 
 				 	 	 	 <option value="安徽">安徽</option> 
 				 	         <option value="新疆">新疆</option> 				 	 	 	      
@@ -47,8 +44,9 @@
 			</div>
 			<div>
 				<input type="text" placeholder="您的主页地址:" v-model="updateuser.homepage">
-			</div>	
-			<button class="ok" v-on:click="update()">确定</button>
+			</div>				
+			<a class="button" href="#" v-on:click="update()">确定</a>
+		</div>
 		</div>
 		</fieldset> 
 		</div>
@@ -98,13 +96,27 @@
 </script>
 
 <style>
+	.container-u{
+		width: 90%;
+		height: 800px;
+		margin: auto;
+	}
 	.a{
-		margin: 30px;
+	margin: 30px;
+	}
+	.c{
+		margin-left: 50px;
+	}
+	.update{
+		margin-top: 20px;
+		margin-bottom: 20px;
+		margin-right: 500px;
+		margin-left: 420px;
 	}
 	.container{
-		width: 100%;
-		height: 100%;
-		align-items: center;
+		width: 100%;		
+		margin: auto;
+		align-items: center;	
 	}
 	.update input{
 		display: flex;
@@ -132,9 +144,43 @@
 		width: 200px;
 		height: 30px;
 	}
-	.ok{
-		margin: 20px;
-		width: 60px;
-		height: 30px;
+    .button {
+     display: block;
+	 margin: 10px;
+     background: #00B16A;
+     color: #fff;
+     width: 100px;
+     height: 40px;
+     line-height: 50px;
+     text-align: center;
+     font-family: 'Ubuntu', sans-serif;
+     font-size: 15px;
+     font-weight: bold;
+     text-decoration: none;
+     border-radius: 2px;
+     overflow: hidden;
+     -webkit-transition: all 0.15s ease-in;
+     transition: all 0.15s ease-in;
+    }   
+   .button:before {
+    content: ' ';
+    position: absolute;
+    background: #fff;
+    width: 25px;
+    height: 50px;
+    top: 0;
+    left: -45px;
+    opacity: 0.3;
+    -webkit-transition: all 0.25s ease-out;
+    transition: all 0.25s ease-out;
+    -webkit-transform: skewX(-25deg);
+            transform: skewX(-25deg);
+   }    
+	.button:hover {
+	 background: #26C281;
 	}
+	.button:hover:before {
+	 width: 45px;
+	 left: 205px;
+	}       			       
 </style>

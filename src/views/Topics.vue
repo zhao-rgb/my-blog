@@ -1,5 +1,6 @@
 <template>
-	<div>		
+	<div>	
+	<h3 class="wbc">专题</h3>	
 	<div class="row">
 	<div class="box zh-col-3" v-for="(topic, index) in topics" :key="index">
 	    <img :src="topic.logo"/>
@@ -13,7 +14,7 @@
 	    </div>
 	</div>  	 
 	</div>
-	 <div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+	 <div class="row"><button class="btn btn-lg btn-rd green-fill" @click="loadMore">点击加载更多</button></div>
 	 <div class="sss">
 	 	 <div><a href="#top"><i class="iconfont shadow" style="font-size: 60px; color: red;">&#xe635;</i></a></div>
 	 </div>
@@ -82,20 +83,19 @@ export default {
 
 <style scoped>
 	.row{
-		margin-top: 80px;
+		margin-top:10px;
 	}
 	.title{
 		background-color: gainsboro;
 	}
 	.box{
-	    background: #fff;
 	    box-shadow: 0 0 5px #bababa;
 	    text-align: center;
 	    overflow: hidden;
 	    position: relative;
 		padding: 10px;
-		margin-right: 10px;
-		margin-bottom: 10px;
+		margin-right: 20px;
+		margin-bottom: 20px;
 		width: 150px;
 		height: 400px;
 		background-color: powderblue;
@@ -112,7 +112,7 @@ export default {
 	.box-content{
 	    width: 100%;
 	    height: 100%;
-	    background: #425770;
+	    background: rgb(165,214,167);
 	    color: #fff;
 	    padding: 30px;
 	    position: absolute;

@@ -30,7 +30,7 @@
 						<div class="ku">
 							<div class="first">
 								<div class="left">
-									<img :src="avatar" class="zh-avatars" @click="handleClick()" v-if="userVo.user.id === this.user.id"/>
+									<img :src="avatar" class="zh-avatars" @click="handleClick()" v-if="userVo.user.id === this.user.id" />
 									<img :src="avatar" class="zh-avatars" v-else />
 									<input type="file" @change="changeAvatar($event)" style="display: none;" id="fileBox" />
 								</div>
@@ -56,7 +56,7 @@
 									编辑个人资料
 								</router-link>
 							</li>
-							<div class="back" style="background-color: wheat;width: 100%; height: 220px; "></div>
+							<div class="back" style="background-color: rgb(197,225,165);width: 100%; height: 220px; "></div>
 							<div class="third">
 								<h3>个人站点</h3>
 								<hr />
@@ -74,40 +74,54 @@
 					<div class="zh-col-8 border-left">
 						<div class="row">
 							<div class="banner flex zh-flex-center zh-col-12">
-								<img src="https://i0.hippopx.com/photos/170/829/152/summerfield-woman-girl-sunset-thumb.jpg" class="cover" />
-								<h3>我写的文章:</h3>
+								<img src="https://i0.hippopx.com/photos/602/362/522/cat-young-animal-curious-wildcat-thumb.jpg" class="cover" />
 							</div>
-							<div class="border zh-col-4" v-for="(item, index) in userVo.articleList" :key="index">
-								<div class="mywrite shadow border">
-									<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
-									<div class="zh-media-middle">
-										<p class="title">标题:{{ item.article.title }}</p>
-										<hr />
-										<p class="sub-title">内容:{{ item.article.content }}</p>
+							<div class="article-box">
+								<div class="tab">
+									<span class="tab-item" :class="{ active: isActive }" @click="changeTab">我的文章</span>
+									<span class="tab-item" :class="{ active: !isActive }" @click="changeTab">我的喜欢</span>
+								</div>
+								<div class="tab-box" v-if="show && selected === 0">
+									<div class="row">
+										<div class="bordert zh-col-4 mywrite" v-for="(item, index) in userVo.articleList" :key="index">
+											<div class="mywrite">
+												<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
+												<div class="zh-media-middle">
+													<p class="title">标题:{{ item.article.title }}</p>
+													<hr />
+													<p class="sub-title">内容:{{ item.article.content }}</p>
+												</div>
+												<div class="media-bottom">
+													<span @click="toDetail(item.article.id)" class="bordert more" style="color: black;">
+														<i class="iconfont">&#xe611;</i>
+														阅读更多
+													</span>
+													<i class="iconfont" style="color:grey; font-size: 25px;float: right;" @click="dels(item.article.id, item.article.userId)">
+														&#xe612;
+													</i>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="media-bottom">
-										<span @click="toDetail(item.article.id)" class="border more">
-											<i class="iconfont">&#xe611;</i>
-											阅读更多
-										</span>
-										<i class="iconfont" style="color:grey; font-size: 25px;float: right;" @click="dels(item.article.id, item.article.userId)">&#xe612;</i>
+								</div>
+
+								<div class="tab-box" v-if="show && selected === 1">
+									<div class="row">
+										<div class="bordert zh-col-4 mywrite" v-for="(item, index) in likeVo" :key="index">
+											<div class="mywrite shadow bordert">
+												<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
+												<div class="zh-media-middle">
+													<p class="title">标题:{{ item.article.title }}</p>
+												</div>
+												<span @click="toDetail(item.like.articleId)" class="bordert more" style="color: black;">
+													<i class="iconfont">&#xe611;</i>
+													阅读更多
+												</span>
+											</div>
+										</div>
 									</div>
 								</div>
 							</div>
-							
-							<h3>我点赞过的文章:</h3>
-							<div class="border zh-col-4" v-for="(item, index) in likeVo" :key="index">
-															<div class="mywrite shadow border">
-																<div class="zh-media-left"><img :src="getImages(item.article.cover)" class="thumnail-xs" /></div>
-																<div class="zh-media-middle">
-																	<p class="title">标题:{{ item.article.title }}</p>
-																
-																</div>
-																
-															</div>
-														</div>
-							
-							
 						</div>
 					</div>
 				</div>
@@ -126,11 +140,13 @@ export default {
 				articleList: {}
 			},
 			likeVo: {
-				article:{},
-				like:{}
+				article: {},
+				like: {}
 			},
 			avatar: '',
-			show: true
+			isActive: true,
+			show: true,
+			selected: 0
 		};
 	},
 	created() {
@@ -144,7 +160,7 @@ export default {
 			this.userVo = res.data.data;
 			this.avatar = this.userVo.user.avatar;
 		});
-		
+
 		this.axios.get(this.GLOBAL.baseUrl + '/like?userId=' + usersId).then(res => {
 			console.log(res.data.data);
 			this.likeVo = res.data.data;
@@ -168,7 +184,7 @@ export default {
 			alert(id);
 			this.axios.delete(this.GLOBAL.baseUrl + '/article/delete?id=' + id + '&userId=' + this.user.id).then(res => {
 				this.user.articles--;
-				// this.$router.go(0);
+				this.$router.go(0);
 			});
 			alert('删除文章成功');
 		},
@@ -190,17 +206,16 @@ export default {
 				data: formData,
 				processData: false,
 				contentType: false
-			}).then(uploadFileRes=> {
-				console.log(uploadFileRes.data.data)
+			}).then(uploadFileRes => {
+				console.log(uploadFileRes.data.data);
 				_this.avatar = uploadFileRes.data.data;
 				this.updateAvatar(_this.avatar);
 			});
 			//调用修改头像的方法
-			
 		},
 		updateAvatar: function(avatar) {
-			var _this = this
-			console.log(avatar)
+			var _this = this;
+			console.log(avatar);
 			this.$http({
 				method: 'put',
 				url: this.GLOBAL.baseUrl + '/updateA',
@@ -212,27 +227,67 @@ export default {
 					avatar: avatar
 				}
 			}).then(res => {
-				  console.log(res.data.code);
+				console.log(res.data.code);
 			});
+		},
+		changeTab: function() {
+			this.isActive = !this.isActive;
+			this.selected = this.selected == 0 ? 1 : 0;
 		}
-		
 	}
 };
 </script>
 
 <style scoped>
-.all {
-	background-image: url('https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=1152000485,3169834010&fm=26&gp=0.jpg');
-	background-size: calc(100%);
+.article-box {
+	width: 100%;
+	height: 550px;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
+	padding: 10px;
+}
+/* 顶部div */
+.tab {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+	width: 100%;
+	height: 10%;
+	background-color: rgb(165, 214, 167);
+	border-radius: 10px;
+}
+.tab-item {
+	cursor: pointer;
+	margin-right: 10px;
+	flex: 0 0 80px;
+	text-align: center;
+	line-height: 38px;
+}
+.active {
+	color: palegreen;
+	font-weight: 700;
+	border-bottom: 2px solid palegreen;
+}
+/* 中间div */
+.tab-box {
+	height: 78%;
+	/* background-color: #00897B; */
+	color: #eee;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	padding: 10px;
+}
+.tab-box .row {
+	margin-top: 0px;
 }
 .bj {
 	text-align: center;
 }
 .mywrite {
-	display: flex;
-	flex-direction: column;
-	flex-wrap: wrap;
-	margin: 20px;
+	margin: 10px;
 }
 .zh-media-middle span {
 	margin-top: 10px;
@@ -319,7 +374,8 @@ li {
 .zh-containers {
 	width: 80%;
 	margin: auto;
-	margin-top: 100px;
+	height: 1600px;
+	margin-top: 120px;
 }
 .nav-item {
 	height: 70px;
@@ -331,9 +387,8 @@ li {
 	padding-bottom: 20px;
 }
 .zh-avatars {
-	width: 100px;
-	height: 100px;
-	border-radius: 50%;
+	width: 120px;
+	height: 120px;
 	cursor: pointer;
 }
 .thumnail-xs {

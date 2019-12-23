@@ -10,16 +10,16 @@
 				</transition-group>
 				<div class="carousel-items"><span v-for="(item, index) in slideList" :class="{ active: index === currentIndex }" @mouseover="change(index)"></span></div>
 			</div>
-			<h3 class="border-bottom">热门文章</h3>
+			<h3 class="border-bottom ">热门文章</h3>
 			<div class="rows">
 				<div class="zh-col-6" v-for="(article, index) in articles" :key="index">
-					<div class="card zh-shadow flex flex-top-y">
+					<div class="card">
 						<div id="yidong"></div>
 						<div class="card-image"><img :src="article.avatar" class="sub-titlee " alt="" /></div>
 						<div class="card-content article-content">
 							<span @click="toDetail(article.id)" class="zh-title pointer">标题:{{ article.title }}</span>
 							<div class="content">
-								<span class="zh-sub-title">{{ article.content.slice(0, 50) }}...</span>
+								<span class="zh-sub-title">简介:{{ article.content.slice(0, 50) }}...</span>
 							</div>
 						</div>
 						<div class="card-tags">
@@ -45,7 +45,7 @@
 			</div>
 			<h3 class="border-bottom">榜单作者</h3>
 			<div v-for="(user, index) in users" :key="index" class="row">
-				<div class="zh-col-12 border box">
+				<div class="zh-col-12 bordert box">
 					<div class="flex-center-y"><img :src="user.avatar" class="avatar-xs bian" @click="toDetailuser(user.id)" /></div>
 					<div class="flex-center-y">
 						<p class="sub-title">{{ user.nickname }}</p>
@@ -166,6 +166,7 @@ export default {
 			// console.log(res.data.data);
 			this.topic = res.data.data;
 		});
+		
 	},
 	methods: {
 		go() {
@@ -204,10 +205,10 @@ export default {
 </script>
 
 <style scoped>
+	
 	.hot{
 		background-color: skyblue;
-	}
-	
+	}	
 .widget {
 	margin-bottom: 25px;
 	position: relative;
@@ -237,7 +238,7 @@ export default {
 	margin-top: 5px;
 }
 .card-tags {
-	margin-left: 60px;
+	margin-left: 100px;
 }
 #yidong {
 	border: 1px solid white;
@@ -271,7 +272,7 @@ export default {
 	100% {
 		top: 0px;
 		left: -4%;
-		background: deeppink;
+		background: greenyellow;
 	}
 }
 
@@ -307,7 +308,7 @@ export default {
 		top: 100px;
 	}
 	from {
-		background: grey;
+		background: rgb(165,214,167);
 	}
 	to {
 		background: white;
@@ -331,8 +332,8 @@ export default {
 }
 
 .card-image {
-	width: 100%;
-	height: 55%;
+	width: 90%;
+	height: 50%;
 	overflow: hidden;
 	position: relative;
 }
@@ -348,12 +349,13 @@ export default {
 .card {
 	display: flex;
 	flex-wrap: wrap;
-	width: 80%;
+	width: 400px;
 	height: 420px;
 	background-size: 100%, 100%;
-	margin: 20px;
+	margin: 30px;
 	padding: 20px;
-	background-color: gainsboro;
+	background-color: rgb(165,214,167);
+	opacity: 0.9;
 }
 
 .gg {

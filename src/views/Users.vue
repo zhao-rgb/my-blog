@@ -1,5 +1,6 @@
 <template>
-	
+	<div >
+		<h3 class="wbc">作者</h3>	
 	<div class="container">
 	    <div class="row">
 	        <div class="zh-col-3" v-for="(user, index) in users" :key="index">
@@ -14,18 +15,19 @@
 					<h3 class="title">{{user.articles}}篇文章，{{user.fans}}个粉丝</h3>
 					<button class="btn btn-lg btn-rd dark-fill" >关注</button>
 	                <ul class="social">    
-						<li><i class="iconfont">&#xe616;</i></li>
+						<li><i class="iconfont" @click="toDetail(user.id)">&#xe616;</i></li>
 						<li><h3 @click="toDetail(user.id)" class="pointer">进入空间</h3></li>	
 	                </ul>
 					</div>
 	            </div>
 	        </div>
 	    </div>
-		<div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
+		<div class="row"><button class="btn btn-lg btn-rd green-fill" @click="loadMore">点击加载更多</button></div>
 		<div class="sss">
 			 <div><a href="#top"><i class="iconfont shadow" style="font-size: 60px; color: red;">&#xe635;</i></a></div>
 		</div>
 		</div>
+		</div>	
 </template>
 
 <script>
@@ -97,13 +99,14 @@ export default {
  .our-team{
      padding-bottom: 20px;
      text-align: center;
-	 background-color: powderblue;
+	 background-color: rgb(165,214,167);
 	  margin: 10px;
  }
  .our-team .pic{
+	 margin-top: 10px;
      display: inline-block;
-     width: 200px;
-     height: 200px;
+     width: 180px;
+     height: 180px;
      border-radius: 50%;
      background: rgb(40,44,53);
      padding: 70px 20px 30px;
@@ -111,8 +114,8 @@ export default {
      position: relative;
  }
  .our-team .description{
-     font-size: 16px;
-	 font-weight: 700;
+     font-size: 15px;
+	 font-weight: 600;
      color: #fff;
  }
  .our-team .pic img{

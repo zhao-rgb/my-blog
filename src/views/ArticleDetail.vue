@@ -1,22 +1,7 @@
 <template>
-	<div>
 		<div class="all">
-			<!-- <div class="zh-navs">
-				<div class="zh-nav-bar zh-fx-between">
-					<ul>
-						<li><router-link to="/index"><i class="iconfont">&#xe616;</i>主页</router-link></li>					
-					</ul>
-					<div class="changeBox">
-						<router-link to="/sign" v-if="this.user === null" class="sgin">去登录</router-link>
-						<img :src="this.user.avatar" class="zh-avatar" v-if="this.user !== null" @click="toUserDetail(user.id)" />
-						<p @click="logout()" v-if="this.user !== null" class="tui">退出</p>
-					</div>
-				</div>
-			</div> -->
-			<div class="zh-containers border">
-				<div class="hader">
+				<div class="hader">					
 					<h3>标题:{{ article.title }}</h3>
-					<!-- <i class="iconfont" style="color:grey; font-size: 25px;float: right; margin: 20px;" @click="dels(article.id,article.userId)">&#xe612;</i>-->
 					</div>							 
 				<div class="box">
 					<img :src="getImages(article.avatar)" class="avatar-xs" @click="toDetail(article.userId)" />
@@ -30,51 +15,60 @@
 						<i class="iconfont pointer" @click="addlike()">&#xe60c;</i>
 						<i class="iconfont pointer" @click="jlike()">&#xe645;</i>
 						<span class="jian">{{ article.likes }}</span>
-						<a href="#viewcontainer"><i class="iconfont pointer">&#xe666;</i></a>
+						<i class="iconfont pointer">&#xe666;</i>
+						<!-- <a href="#viewcontainer"><i class="iconfont pointer">&#xe666;</i></a> -->
 						<span>{{ article.comments }}</span>
 					</div>
-					<div class="card"><p v-html="text"></p></div>
+					<div class="card">
+						<div class="img-left">
+							<img :src="getImages(article.cover)" />
+							<h3 class="title">{{ article.title }}</h3>
+							<p v-html="text"></p>
+							<div style="clear: both;"></div>
+						</div>
+						<div id="viewcontainer">
+							<fieldset>
+								<legend>评论</legend>
+								<div class="bordert">
+									<textarea
+										rows="10"
+										cols="30"
+										placeholder="发表评论:"
+										v-model="writeComment.content"
+										style="width: 80%;height: 200px;margin-left: 100px;margin-top: 20px;margin-bottom: 20px;"
+									></textarea>
+									<button
+										class="zh-btn-large shadow"
+										@click="release"
+										v-on:click="changeshow()"
+										style="margin-left: 1250px;margin-bottom: 30px;width: 100px;height: 35px;background-color: orange;"
+									>
+										发布
+									</button>
+								</div>
+								<div class="nav-item bordert" v-for="(item, index) in comment" :key="index">
+									<div class="card-left ">
+										<img :src="item.author.avatar" class="avatar-xs bian" @click="toDetail(item.comment.userId)"/>
+										<button class="del" @click="del(item.comment.id,item.comment.userId)" v-if="item.comment.userId === user.id">删除</button>
+									</div>
+									<div class="card-right ">
+										<p class="cz-sub-title">{{ item.author.nickname }}</p>
+										<p >{{ item.comment.content }}</p>
+										<p class="cz-meta">
+											{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
+											{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
+										</p>
+									</div>
+								</div>
+								<div class="row">
+								<p @click="loadMore">展开更多评论>>></p>
+								</div>
+							</fieldset>
+						</div>
+						</div>
 				</div>
-			</div>
-			<div id="viewcontainer">
-				<fieldset>
-					<legend>评论</legend>
-					<div class="border">
-						<textarea
-							rows="10"
-							cols="30"
-							placeholder="发表评论:"
-							v-model="writeComment.content"
-							style="width: 80%;height: 200px;margin-left: 100px;margin-top: 20px;margin-bottom: 20px;"
-						></textarea>
-						<button
-							class="zh-btn-large shadow"
-							@click="release"
-							v-on:click="changeshow()"
-							style="margin-left: 600px;margin-bottom: 20px;width: 200px;height: 40px;background-color: orange;"
-						>
-							发布
-						</button>
-					</div>
-					<div class="nav-item border" v-for="(item, index) in comment" :key="index">
-						<div class="card-left ">
-							<img :src="item.author.avatar" class="avatar-xs bian" />
-							<button class="del" @click="del(item.comment.id,item.comment.userId)" v-if="item.comment.userId === user.id">删除</button>
-						</div>
-						<div class="card-right ">
-							<p class="cz-sub-title">{{ item.author.nickname }}</p>
-							<p class="border">{{ item.comment.content }}</p>
-							<p class="cz-meta">
-								{{ item.comment.createTime.date.year }}年{{ item.comment.createTime.date.month }}月{{ item.comment.createTime.date.day }}日
-								{{ item.comment.createTime.time.hour }}:{{ item.comment.createTime.time.minute }}:{{ item.comment.createTime.time.second }}
-							</p>
-						</div>
-					</div>
-					<div class="row"><button class="btn btn-lg btn-rd dark-fill" @click="loadMore">点击加载更多</button></div>
-				</fieldset>
-			</div>
+				<router-link to="/article" class="back"><i class="iconfont" style="color: black">&#xe607;</i>返回</router-link>
 		</div>		
-	</div>
 </template>
 <script>
 export default {
@@ -189,17 +183,19 @@ export default {
 				this.article.comments++;
 			});
 			alert('评论成功')
+			this.$router.go(0);
 		},
 		del(id,id2) {
 			if(id2 !==this.user.id){
 				alert("不能删")
 				return;
 			}
-			alert(id);
+			// alert(id);
 			this.axios.delete(this.GLOBAL.baseUrl + '/comments/delete?id='+id+'&articleId='+this.article.id).then(res => {
 				this.article.comments--;
 			});
 			alert('删除评论成功');
+			this.$router.go(0);
 		},
 		changeshow() {
 			this.show = !this.show;
@@ -214,7 +210,7 @@ export default {
 				}else{
 				   this.article.likes++;
 				   alert('关注成功');
-				}
+				}			
 			});		
 		},
 		jlike(){			
@@ -245,6 +241,27 @@ export default {
 };
 </script>
 <style scoped>
+	.back {
+		color: black;
+		position: absolute;
+		top: 1%;
+		left: 1%;
+	}
+   .img-left {
+            border: 3px solid #005588;  
+			 padding: 10px;
+			 margin: 10px;
+        }
+        .img-left img {
+            float:left;  /* 对图片进行浮动就可以实现了  */
+            width:400px;
+			margin: 25px;
+        }
+		.hader{
+			padding-top: 20px;
+			margin-bottom: 20px;
+			font-size: 26px;
+		}
 .del {
 	width: 50px;
 	height: 25px;
@@ -284,6 +301,12 @@ export default {
 h3 {
 	text-align: center;
 }
+.row p{
+	background-color: white;
+    margin-right: 10px;
+	font-size: 14px;
+	font-weight: 500;
+}
 /* .zh-navs {
 	height: 70px;
 	position: fixed;
@@ -300,11 +323,13 @@ li {
 .all {
 	width: 100%;
 	margin: auto;
-	background-color: white;
+	background-color: rgb(241,248,233);
 }
 .box {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 	height: 50px;
-	line-height: 0px;
 	text-align: center;
 }
 .container-b {

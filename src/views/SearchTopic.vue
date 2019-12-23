@@ -4,10 +4,10 @@
 			<div class="zh-media-wraaper zh-shadow m">
 				<div class="zh-media-left">
 					<img :src="item.logo" class="avatar-lg link" />
-					<p>{{ item.topicName }}</p>
+					<p >{{ item.topicName }}</p>
 				</div>
 				<div class="zh-media-middle">
-					<p>{{ item.description.slice(0, 30) }}</p>
+					<p @click="toDetail(item.id)">{{ item.description.slice(0, 30) }}</p>
 					<p>
 						<span class="meta gutter">{{ item.articles }}篇文章</span>
 						<span class="meta gutter">{{ item.follows }}人关注</span>
@@ -41,7 +41,11 @@ export default {
 				this.topics = res.data.data;
 			});
 	},
-	methods: {}
+	methods: {
+		toDetail(id) {
+			this.$router.push('/topic/detail/' + id);
+		}
+	}
 };
 </script>
 

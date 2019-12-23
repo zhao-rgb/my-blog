@@ -7,12 +7,22 @@
 	box-sizing: border-box;
 	outline: none;
 }
-
+.all{
+		background-color: rgb(241,248,233);
+		background-size: calc(100%);
+	}
 img {
 	border: none;
 	transition: all 1s;
 }
-
+.wbc{
+	background-color: rgb(167,255,235);
+	box-shadow: 2px 5px 10px rgb(165,214,167);
+	width: 70px;
+	height: 32px;
+	text-align: center;
+	font-size: 24px;
+}
 img:hover {
 	transform: scale(1.1);
 }
@@ -33,9 +43,10 @@ ul {
 
 /* -----------布局设置---------- */
 .zh-container {	
-	width: 80%;
+	width: 95%;
 	margin: auto;
 	padding-top: 80px;	
+	
 }
 
 .zh-row {
@@ -145,8 +156,8 @@ ul {
 }
 
 .title {
-	font-size: 16px;
-	font-weight: 600;
+	font-size: 20px;
+	font-weight: 700;
 	color: rgba(0, 0, 0, 0.7);
 	cursor: pointer;
 }
